@@ -31,7 +31,7 @@ Input numbers in string into static class ‘MathArithmetic.cs’ selected arith
 
 Static class ‘MathArithmetic’ operators’ Addition, Subtraction, Multiplication, Division and Modular can compute whole number and number with decimal. ‘MathArithmetic’ operator’s Exponent currently can only computer number with no decimal.
 
-Version 0:   [main.cs]()   [MathArithmetic.cs]()
+Version 0:   [main.cs](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/main.cs)   [MathArithmetic.cs](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/MathArithmetic.cs)
 
  
 
