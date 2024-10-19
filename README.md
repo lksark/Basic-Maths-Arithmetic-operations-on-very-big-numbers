@@ -18,7 +18,7 @@ Other math arithmetic operations are Modular, Exponent and etc.
 
 Common calculators and calculator software have input number size limit, cannot compute very big input number and output very big & precise number result. Therefore, I write this program that can compute basic math arithmetic operations on very big numbers input and produce precise number result.
 
-In programming language, when we write code to perform math arithmetic on numbers, both input & output numbers are integer. Integer are signed 32-bit data size. To overcome existing math arithmetic computing tool data size limit, I used list to store each digit of input & output of number. Using this way, we can compute very large numbers without simplifying the digits of input & result.
+In programming language, when we write code to perform math arithmetic on numbers, both input & output numbers are limited to data size of integer. Integer are signed 32-bit data size. To overcome existing math arithmetic computing tool data size limit, I used list to store each digit of input & output of number. Using this way, we can compute very large numbers without simplifying the digits of input & result.
 
 Numbers that having too many digits understandably doesn’t carry significant senses. We compute math arithmetic using the most significant digits of numbers and we will get rationally correct result in all situations.
 
