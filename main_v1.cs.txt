@@ -1,0 +1,167 @@
+﻿using BasicMathsArithmetic;
+using System;
+using System.Numerics;
+
+namespace BasicMathsArithmetic
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("999.55 + 0.55 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("999.55", "0.55"));
+            Console.WriteLine("2365875513654654 + 6555654546684658 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("2365875513654654", "6555654546684658"));
+            Console.WriteLine("2365875.543654654 + 65556545.466846586 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("2365875.543654654", "65556545.466846586"));
+            Console.WriteLine("2365875.543654654 + 65556545 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("2365875.543654654", "65556545"));
+            Console.WriteLine("198 + 22.0435 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("198", "22.0435"));
+            Console.WriteLine("198 + 822.0435 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("198", "822.0435"));
+            Console.WriteLine("0.55 + 0.55 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("0.55", "0.55"));
+            Console.WriteLine("0.00000055 + 0.0000054 = " + MathArithmetic.Addition_UnlimitedDataSize_1Digit("0.00000055", "0.0000054"));
+            Console.WriteLine();
+
+            Console.WriteLine("168443265132168101 + 7555654546684658 = " + MathArithmetic.Addition_UnlimitedDataSize_long("168443265132168101", "7555654546684658"));
+            Console.WriteLine("684432 + 7555 = " + MathArithmetic.Addition_UnlimitedDataSize_long("684432", "7555"));
+            Console.WriteLine("68443265132168101 + 46684658 = " + MathArithmetic.Addition_UnlimitedDataSize_long("68443265132168101", "46684658"));
+            Console.WriteLine("23658756844.5436 + 65556545.4668465861 = " + MathArithmetic.Addition_UnlimitedDataSize_long("23658756844.5436", "65556545.4668465861"));
+            Console.WriteLine("999.55 + 0.55 = " + MathArithmetic.Addition_UnlimitedDataSize_long("999.55", "0.55"));
+            Console.WriteLine("2365875513654654 + 6555654546684658 = " + MathArithmetic.Addition_UnlimitedDataSize_long("2365875513654654", "6555654546684658"));
+            Console.WriteLine("2365875.543654654 + 65556545.466846586 = " + MathArithmetic.Addition_UnlimitedDataSize_long("2365875.543654654", "65556545.466846586"));
+            Console.WriteLine("2365875.543654654 + 65556545 = " + MathArithmetic.Addition_UnlimitedDataSize_long("2365875.543654654", "65556545"));
+            Console.WriteLine("198 + 22.0435 = " + MathArithmetic.Addition_UnlimitedDataSize_long("198", "22.0435"));
+            Console.WriteLine("198 + 822.0435 = " + MathArithmetic.Addition_UnlimitedDataSize_long("198", "822.0435"));
+            Console.WriteLine("0.55 + 0.55 = " + MathArithmetic.Addition_UnlimitedDataSize_long("0.55", "0.55"));
+            Console.WriteLine("-0.55 + -0.54 = " + MathArithmetic.Addition_UnlimitedDataSize_long("-0.55", "-0.54"));
+            Console.WriteLine("-0.00000055 + -0.0000054 = " + MathArithmetic.Addition_UnlimitedDataSize_long("-0.00000055", "-0.0000054"));
+            Console.WriteLine();
+            
+
+            
+            Console.WriteLine("2365 - 23654 = " + MathArithmetic.Minus_UnlimitedDataSize_long("2365", "23654"));
+            Console.WriteLine("23654 - 2365 = " + MathArithmetic.Minus_UnlimitedDataSize_long("23654", "2365"));
+            Console.WriteLine("236541 - 23654.56 = " + MathArithmetic.Minus_UnlimitedDataSize_long("236541", "23654.56"));
+            Console.WriteLine("1000 - 0.56 = " + MathArithmetic.Minus_UnlimitedDataSize_long("1000", "0.56"));
+            Console.WriteLine("23654.32 - 23654.5698 = " + MathArithmetic.Minus_UnlimitedDataSize_long("23654.32", "23654.5698"));
+            Console.WriteLine("85464.1468 - 5464.56 = " + MathArithmetic.Minus_UnlimitedDataSize_long("85464.1468", "5464.56"));
+            Console.WriteLine("5464.1468 - 85464.56 = " + MathArithmetic.Minus_UnlimitedDataSize_long("5464.1468", "85464.56"));
+            Console.WriteLine("0.71468 - 0.56 = " + MathArithmetic.Minus_UnlimitedDataSize_long("0.71468", "0.56"));
+            Console.WriteLine("68735645216454132186543131265435454.714686875432168756321543321325 - 68735645216454132186543131265435454.7146868754321687563215433213254 = " + MathArithmetic.Minus_UnlimitedDataSize_long("68735645216454132186543131265435454.714686875432168756321543321325", "68735645216454132186543131265435454.7146868754321687563215433213254"));
+            Console.WriteLine("8735645216454132186543131265435454.714686875432168756321543321325 - 68735645216454132186543131265435454.7146868754321687563215433213254 = " + MathArithmetic.Minus_UnlimitedDataSize_long("8735645216454132186543131265435454.714686875432168756321543321325", "68735645216454132186543131265435454.7146868754321687563215433213254"));
+            Console.WriteLine("1.71468 - 1.71468 = " + MathArithmetic.Minus_UnlimitedDataSize_long("1.71468", "1.71468"));
+            Console.WriteLine("1.71468 - -1.71467 = " + MathArithmetic.Minus_UnlimitedDataSize_long("1.71468", "-1.71467"));
+            Console.WriteLine();
+
+            Console.WriteLine("2365 - 23654 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("2365", "23654"));
+            Console.WriteLine("23654 - 2365 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("23654", "2365"));
+            Console.WriteLine("236541 - 23654.56 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("236541", "23654.56"));
+            Console.WriteLine("1000 - 0.56 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("1000", "0.56"));
+            Console.WriteLine("23654.32 - 23654.5698 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("23654.32", "23654.5698"));
+            Console.WriteLine("85464.1468 - 5464.56 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("85464.1468", "5464.56"));
+            Console.WriteLine("5464.1468 - 85464.56 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("5464.1468", "85464.56"));
+            Console.WriteLine("0.71468 - 0.56 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("0.71468", "0.56"));
+            Console.WriteLine("68735645216454132186543131265435454.714686875432168756321543321325 - 68735645216454132186543131265435454.7146868754321687563215433213254 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("68735645216454132186543131265435454.714686875432168756321543321325", "68735645216454132186543131265435454.7146868754321687563215433213254"));
+            Console.WriteLine("8735645216454132186543131265435454.714686875432168756321543321325 - 68735645216454132186543131265435454.7146868754321687563215433213254 = " + MathArithmetic.Minus_UnlimitedDataSize_1Digit("8735645216454132186543131265435454.714686875432168756321543321325", "68735645216454132186543131265435454.7146868754321687563215433213254"));
+            Console.WriteLine();
+            
+
+            
+            Console.WriteLine("34632 * 8432 = " + MathArithmetic.Multiplication_UnlimitedDataSize_1Digit("34632", "8432"));
+            Console.WriteLine("63 * 1 = " + MathArithmetic.Multiplication_UnlimitedDataSize_1Digit("63", "1"));
+            Console.WriteLine("0.015 * 0.2 = " + MathArithmetic.Multiplication_UnlimitedDataSize_1Digit("0.015", "0.2"));
+            Console.WriteLine("21.01 * 135.654 = " + MathArithmetic.Multiplication_UnlimitedDataSize_1Digit("21.01", "135.654"));
+            Console.WriteLine("0.00006843156 * 0.753548655132 = " + MathArithmetic.Multiplication_UnlimitedDataSize_1Digit("0.00006843156", "0.753548655132"));
+            Console.WriteLine();
+
+            //Multiplication_UnlimitedDataSize_long
+            Console.WriteLine("346684321642165432986532 * 8487651302149898764532167532165 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("346684321642165432986532", "8487651302149898764532167532165"));
+            Console.WriteLine("346684321642165432986532 * 848765130287351379865373532651334149898764532167532165 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("346684321642165432986532", "848765130287351379865373532651334149898764532167532165"));
+            Console.WriteLine("999999999999999999999999999999999999999999 * 999999999999999999999999999999999999999999 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("999999999999999999999999999999999999999999", "999999999999999999999999999999999999999999"));
+            Console.WriteLine("34632 * 8432 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("34632", "8432"));
+            Console.WriteLine("63 * 1 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("63", "1"));
+            Console.WriteLine("0.015 * -0.2 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("0.015", "-0.2"));
+            Console.WriteLine("21.01 * 135.654 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("21.01", "135.654"));
+            Console.WriteLine("0.00006843156 * 0.753548655132 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("0.00006843156", "0.753548655132"));
+            Console.WriteLine("10000000000.00000000001 * 20000000000.00000000002 = " + MathArithmetic.Multiplication_UnlimitedDataSize_long("10000000000.00000000001", "20000000000.00000000002"));
+            Console.WriteLine();
+            
+            Console.WriteLine("63 / 63 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("63", "63"));
+            Console.WriteLine("88 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("88", "22"));
+            Console.WriteLine("220 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("220", "22"));
+            Console.WriteLine("88000000000000000000 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("88000000000000000000", "22"));
+            Console.WriteLine("902 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("902", "22"));
+            Console.WriteLine("198 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("198", "22"));
+            Console.WriteLine("200 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("200", "22"));
+            Console.WriteLine("296237062 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("296237062", "22"));
+            Console.WriteLine("68432165321 / 9873 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("68432165321", "9873"));
+            Console.WriteLine("68432165321 / 19873 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("68432165321", "19873"));
+            Console.WriteLine("684432651321681011 / 71342 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("684432651321681011", "71342"));
+            Console.WriteLine("4000 / 2 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("4000", "2"));
+            Console.WriteLine("0.4 / 0.002 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("0.4", "0.002"));
+            Console.WriteLine("0.004 / 0.2 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("0.004", "0.2"));
+            Console.WriteLine("0.006843156464312648686964154844855 / 0.753548655132 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("0.006843156464312648686964154844855", "0.753548655132"));
+            Console.WriteLine("0.00684315646431264868696415484485 / 0.753548655132 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("0.00684315646431264868696415484485", "0.753548655132"));
+            Console.WriteLine("2 / 222 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("2", "222"));
+            Console.WriteLine("6824282187654314585433454545758535697347687247837435687687 / 23555544765498753356532423245432653587526546787524323564323 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("6824282187654314585433454545758535697347687247837435687687", "23555544765498753356532423245432653587526546787524323564323"));
+            Console.WriteLine("6824282187654314585433454545758535697372738 / 23555544765 = " + MathArithmetic.Division_UnlimitedDataSize_1Digit("6824282187654314585433454545758535697372738", "23555544765"));
+            Console.WriteLine();
+
+            /*
+            Console.WriteLine("3 / 7 = " + MathArithmetic.Division_UnlimitedDataSize_long("3", "7"));
+            Console.WriteLine("63 / 63 = " + MathArithmetic.Division_UnlimitedDataSize_long("63", "63"));
+            Console.WriteLine("88 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("88", "22"));
+            Console.WriteLine("880 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("880", "22"));
+            Console.WriteLine("88000000000000000000 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("88000000000000000000", "22"));
+            Console.WriteLine("902 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("902", "22"));
+            Console.WriteLine("198 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("198", "22"));
+            Console.WriteLine("200 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("200", "22"));
+            Console.WriteLine("296237062 / 22 = " + MathArithmetic.Division_UnlimitedDataSize_long("296237062", "22"));
+            Console.WriteLine("68432165321 / 9873 = " + MathArithmetic.Division_UnlimitedDataSize_long("68432165321", "9873"));
+            Console.WriteLine("68432165321 / 19873 = " + MathArithmetic.Division_UnlimitedDataSize_long("68432165321", "19873"));
+            Console.WriteLine("684432651321681011 / 71342 = " + MathArithmetic.Division_UnlimitedDataSize_long("684432651321681011", "71342"));
+            Console.WriteLine("4000 / 2 = " + MathArithmetic.Division_UnlimitedDataSize_long("4000", "2"));
+            Console.WriteLine("0.4 / 0.002 = " + MathArithmetic.Division_UnlimitedDataSize_long("0.4", "0.002"));
+            Console.WriteLine("0.004 / 0.2 = " + MathArithmetic.Division_UnlimitedDataSize_long("0.004", "0.2"));
+            Console.WriteLine("0.006843156464312648686964154844855 / 0.753548655132 = " + MathArithmetic.Division_UnlimitedDataSize_long("0.006843156464312648686964154844855", "0.753548655132"));
+            Console.WriteLine("684315646431264868696415484485 / 753548655132 = " + MathArithmetic.Division_UnlimitedDataSize_long("684315646431264868696415484485", "753548655132"));
+            Console.WriteLine("68242821876543145854334545457585356973727 / 235555447654987533565324232454326535875218 = " + MathArithmetic.Division_UnlimitedDataSize_long("68242821876543145854334545457585356973727", "235555447654987533565324232454326535875218"));
+            Console.WriteLine("6824282187654314585433454545758535697372738 / 23555544765 = " + MathArithmetic.Division_UnlimitedDataSize_long("6824282187654314585433454545758535697372738", "23555544765"));
+            Console.WriteLine();
+            */
+            
+            Console.WriteLine("200 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("200", "22"));
+            Console.WriteLine("22 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("22", "22"));
+            Console.WriteLine("220 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("220", "22"));
+            Console.WriteLine("880000000000000000000 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("880000000000000000000", "22"));
+            Console.WriteLine("296237062 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("296237062", "22"));
+            Console.WriteLine("68432165321 % 9873 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("68432165321", "9873"));
+            Console.WriteLine("68432165321 % 19873 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("68432165321", "19873"));
+            Console.WriteLine("684432651321681011 % 71342 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("684432651321681011", "71342"));
+            Console.WriteLine("4000 % 2 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("4000", "2"));
+            Console.WriteLine("0.4 % 0.002 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("0.4", "0.002"));
+            Console.WriteLine("0.004 % 0.2 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("0.004", "0.2"));
+            Console.WriteLine("0.06543268331545211 % 0.2 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("0.06543268331545211", "0.2"));
+            Console.WriteLine("1.46651132 % 0.5 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("1.46651132", "0.5"));
+            Console.WriteLine("1.46651132 % 0.03 = " + MathArithmetic.Modular_UnlimitedDataSize_1Digit("1.46651132", "0.03"));
+            Console.WriteLine();
+
+            Console.WriteLine("200 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_long("200", "22"));
+            Console.WriteLine("22 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_long("22", "22"));
+            Console.WriteLine("220 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_long("220", "22"));
+            Console.WriteLine("880000000000000000000 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_long("880000000000000000000", "22"));
+            Console.WriteLine("296237062 % 22 = " + MathArithmetic.Modular_UnlimitedDataSize_long("296237062", "22"));
+            Console.WriteLine("68432165321 % 9873 = " + MathArithmetic.Modular_UnlimitedDataSize_long("68432165321", "9873"));
+            Console.WriteLine("68432165321 % 19873 = " + MathArithmetic.Modular_UnlimitedDataSize_long("68432165321", "19873"));
+            Console.WriteLine("684432651321681011 % 71342 = " + MathArithmetic.Modular_UnlimitedDataSize_long("684432651321681011", "71342"));
+            Console.WriteLine("4000 % 2 = " + MathArithmetic.Modular_UnlimitedDataSize_long("4000", "2"));
+            Console.WriteLine("0.4 % 0.002 = " + MathArithmetic.Modular_UnlimitedDataSize_long("0.4", "0.002"));
+            Console.WriteLine("0.004 % 0.2 = " + MathArithmetic.Modular_UnlimitedDataSize_long("0.004", "0.2"));
+            Console.WriteLine("0.06543268331545211 % 0.2 = " + MathArithmetic.Modular_UnlimitedDataSize_long("0.06543268331545211", "0.2"));
+            Console.WriteLine("1.46651132 % 0.5 = " + MathArithmetic.Modular_UnlimitedDataSize_long("1.46651132", "0.5"));
+            Console.WriteLine("1.46651132 % 0.03 = " + MathArithmetic.Modular_UnlimitedDataSize_long("1.46651132", "0.03"));
+            Console.WriteLine();
+
+            Console.WriteLine("23 ^ 1073 = " + MathArithmetic.Exponent_UnlimitedDataSize_1Digit("23", "1073"));
+            Console.WriteLine("11 ^ 11 = " + MathArithmetic.Exponent_UnlimitedDataSize_1Digit("11", "11"));
+            Console.WriteLine("26 ^ 11 = " + MathArithmetic.Exponent_UnlimitedDataSize_1Digit("26", "11"));
+            Console.WriteLine();
+        }
+    }
+}
