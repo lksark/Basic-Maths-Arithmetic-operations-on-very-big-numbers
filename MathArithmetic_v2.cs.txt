@@ -1,0 +1,2821 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BasicMathsArithmetic
+{
+    static class MathArithmetic
+    {
+
+        public static int CompareTo_UnlimitedDataSize(List<int> list_a, List<int> list_b)
+        {
+            // this CompareTo does not compare number with decimal value
+            if (list_a.Count > list_b.Count)
+                return 1;
+            else if (list_a.Count < list_b.Count)
+                return -1;
+            else
+            {
+                for (int i = list_a.Count - 1; i >= 0; i--)
+                {
+                    if (list_a[i] > list_b[i])
+                        return 1;
+                    else if (list_a[i] < list_b[i])
+                        return -1;
+                    else
+                        ;
+                }
+            }
+
+            return 0;
+        }
+
+        public static int CompareTo_UnlimitedDataSize_long(List<long> list_a, List<long> list_b)
+        {
+            // this CompareTo does not compare number with decimal value
+            if (list_a.Count > list_b.Count)
+                return 1;
+            else if (list_a.Count < list_b.Count)
+                return -1;
+            else
+            {
+                for (int i = list_a.Count - 1; i >= 0; i--)
+                {
+                    if (list_a[i] > list_b[i])
+                        return 1;
+                    else if (list_a[i] < list_b[i])
+                        return -1;
+                    else
+                        ;
+                }
+            }
+
+            return 0;
+        }
+
+        public static string Addition_UnlimitedDataSize_1Digit(string a, string b)
+        {
+            List<int> list_a = new List<int>();
+            int count_a_Decimal = 0;
+            List<int> list_b = new List<int>();
+            int count_b_Decimal = 0;
+            List<int> list_result_addition = new List<int>();
+
+            bool isDecimal = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                int temp_int;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(a.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_a_Decimal++;
+
+                        list_a.Insert(0, temp_int);
+                    }
+                }
+
+                isDecimal = false;
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (b.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(b.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_b_Decimal++;
+                        
+                        list_b.Insert(0, temp_int);
+                    }
+                }
+
+                if(count_a_Decimal > count_b_Decimal)
+                {
+                    for(int i = 0; i < count_a_Decimal - count_b_Decimal; i++)
+                        list_b.Insert(0, 0);
+                }
+                else if (count_a_Decimal < count_b_Decimal)
+                {
+                    for (int i = 0; i < count_b_Decimal - count_a_Decimal; i++)
+                        list_a.Insert(0, 0);
+                }
+                else
+                    ;
+
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("You have entered non-numeric characters");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e);
+            }
+
+            list_result_addition = Addition_UnlimitedDataSize_1Digit(list_a, list_b).ToList();
+
+            string string_result_Addition = "";
+            for (int i = list_result_addition.Count() - 1; i >= 0; i--)
+                string_result_Addition += list_result_addition[i].ToString();
+
+            // when either a or b has decimal
+            if(count_a_Decimal > 0 || count_b_Decimal > 0)
+            {
+                if (count_a_Decimal >= count_b_Decimal)
+                    string_result_Addition = string_result_Addition.Insert(string_result_Addition.Count() - count_a_Decimal, ".");
+                else //(count_a_Decimal < count_b_Decimal)
+                    string_result_Addition = string_result_Addition.Insert(string_result_Addition.Count() - count_b_Decimal, ".");
+
+                while (string_result_Addition[string_result_Addition.Length - 1] == '0')
+                    string_result_Addition = string_result_Addition.Remove(string_result_Addition.Length - 1);
+            }
+
+            return string_result_Addition;
+        }
+
+        public static List<int> Addition_UnlimitedDataSize_1Digit(List<int> list_a, List<int> list_b)
+        {
+            List<int> list_result_addition = new List<int>();
+
+            int result_addition;
+            int index = 0;
+            int nextDigit_Add1 = 0;
+
+            if (list_a.Count > list_b.Count)
+            {
+                foreach (int _list_a in list_a)
+                {
+                    if (index < list_b.Count)
+                        result_addition = _list_a + list_b.ElementAt(index) + nextDigit_Add1;
+                    else
+                        result_addition = _list_a + nextDigit_Add1;
+                    index++;
+
+                    nextDigit_Add1 = 0;
+                    if (result_addition > 9)
+                    {
+                        nextDigit_Add1 = 1;
+                        result_addition -= 10;
+                    }
+                    list_result_addition.Add(result_addition);
+                }
+            }
+            else
+            {
+                foreach (int _list_b in list_b)
+                {
+                    if (index < list_a.Count)
+                        result_addition = list_a.ElementAt(index) + _list_b + nextDigit_Add1;
+                    else
+                        result_addition = _list_b;
+                    index++;
+
+                    nextDigit_Add1 = 0;
+                    if (result_addition > 9)
+                    {
+                        nextDigit_Add1 = 1;
+                        result_addition -= 10;
+                    }
+                    list_result_addition.Add(result_addition);
+                }
+            }
+
+            if (nextDigit_Add1 == 1)
+                list_result_addition.Add(1);
+
+            return list_result_addition;
+        }
+
+        public static string Addition_UnlimitedDataSize_long(string a, string b)
+        {
+            List<long> list_a = new List<long>();
+            int count_a_Decimal = 0;
+            List<long> list_b = new List<long>();
+            int count_b_Decimal = 0;
+            List<long> list_result = new List<long>();
+
+            bool string_a_firstCharacterNegative = false;
+            bool string_b_firstCharacterNegative = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+                
+                long temp_long_1digit;
+                long temp_long = 0;
+                int curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                
+                // check if string a has any decimal & count of decimal digits
+                count_a_Decimal = a.IndexOf('.');
+                if (count_a_Decimal != -1)
+                    count_a_Decimal = a.Length - 1 - count_a_Decimal;
+                else
+                    count_a_Decimal = 0;
+                // check if string b has any decimal & count of decimal digits
+                count_b_Decimal = b.IndexOf('.');
+                if (count_b_Decimal != -1)
+                    count_b_Decimal = b.Length - 1 - count_b_Decimal;
+                else
+                    count_b_Decimal = 0;
+                // add 0 at the back of decimal to make count_a_Decimal == count_b_Decimal
+                if(count_a_Decimal > 0 || count_b_Decimal > 0)
+                {
+                    if (count_a_Decimal > count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_a_Decimal - count_b_Decimal; i++)
+                            b += "0";
+
+                        count_b_Decimal = count_a_Decimal;
+                    }
+                    else if (count_a_Decimal < count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_b_Decimal - count_a_Decimal; i++)
+                            a += "0";
+
+                        count_a_Decimal = count_b_Decimal;
+                    }
+                    else
+                        ;
+                }
+
+                // convert string a to list_a
+                // check if string a first character is '-'
+                if (a[0] == '-')
+                {
+                    string_a_firstCharacterNegative = true;
+                    a = a.Remove(0, 1);
+                }
+                // Save string a's number into list_a
+                for (int i = a.Length - 1; i >= 0; i--)
+                {
+                    if (a.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(a.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 18 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 18));
+
+                        if ((curr_digit + 1) % 18 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_a.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 18 != 0)
+                    list_a.Add(temp_long);     // insert remaining most significant digit temp_int
+
+                // convert string b to list_b
+                temp_long = 0;
+                curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                // check if string b first character is '-'
+                if (b[0] == '-')
+                {
+                    string_b_firstCharacterNegative = true;
+                    b = b.Remove(0, 1);
+                }
+                else
+                    string_b_firstCharacterNegative = false;
+                for (int i = b.Length - 1; i >= 0; i--)
+                {
+                    if (b.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(b.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 18 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 18));
+
+                        if ((curr_digit + 1) % 18 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_b.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 18 != 0)
+                    list_b.Add(temp_long);     // insert remaining most significant digit temp_long
+
+                if (list_a.Count > list_b.Count)
+                {
+                    for (int i = 0; i < list_a.Count - list_b.Count; i++)
+                        list_b.Add(0);
+                }
+                else if (list_a.Count < list_b.Count)
+                {
+                    for (int i = 0; i < list_b.Count - list_a.Count; i++)
+                        list_a.Add(0);
+                }
+                else
+                    ;
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("You have entered non-numeric characters");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e);
+            }
+
+            // compute addition
+            bool isNegativeResult = false;
+            Tuple<bool, List<long>, List<long>> tuple_list_result;
+            if (!string_a_firstCharacterNegative && string_b_firstCharacterNegative)    // a - b
+            {
+                list_result = Minus_UnlimitedDataSize_long(list_a, list_b).ToList();
+
+                if (list_result.Last() < 0)
+                {
+                    isNegativeResult = true;
+                    list_result[list_result.Count() - 1] *= -1;
+                }
+                    
+            }
+            else if (string_a_firstCharacterNegative && !string_b_firstCharacterNegative)    // b - a
+            {
+                list_result = Minus_UnlimitedDataSize_long(list_b, list_a).ToList();
+
+                if (list_result.Last() < 0)
+                {
+                    isNegativeResult = true;
+                    list_result[list_result.Count() - 1] *= -1;
+                }
+            }
+            else if (!string_a_firstCharacterNegative && !string_b_firstCharacterNegative)    // a + b
+            {
+                list_result = Addition_UnlimitedDataSize_long(list_a, list_b).ToList();
+            }
+            else  // (-a) + (-b) = -(a + b)
+            {
+                list_result = Addition_UnlimitedDataSize_long(list_a, list_b).ToList();
+
+                isNegativeResult = true;
+            }
+
+            string string_result = "";
+
+            string_result = list_result[list_result.Count() - 1].ToString();
+            for (int i = list_result.Count() - 2; i >= 0; i--)
+            {
+                if (list_result[i] == 0)
+                    string_result += "000000000000000000";
+                else
+                {
+                    long temp = 100000000000000000;
+                    while (list_result[i] < temp)
+                    {
+                        string_result += "0";
+                        temp /= 10;
+                    }
+
+                    string_result += list_result[i];
+                }
+            }
+
+            // when either a or b has decimal
+            if (count_a_Decimal > 0 || count_b_Decimal > 0)
+            {
+                if(string_result.Length < count_a_Decimal)
+                {
+                    for(int i = count_a_Decimal - string_result.Length; i >= 0; i-- )
+                        string_result = "0" + string_result;
+                }
+
+                // Previously set count_a_Decimal == count_b_Decimal
+                string_result = string_result.Insert(string_result.Count() - count_a_Decimal, ".");
+
+                while (string_result.EndsWith("0"))
+                    string_result = string_result.TrimEnd('0');
+
+            }
+
+            if(isNegativeResult)
+                string_result = "-" + string_result;
+
+            return string_result;
+        }
+
+        public static List<long> Addition_UnlimitedDataSize_long(List<long> list_a, List<long> list_b)
+        {
+            List<long> list_result = new List<long>();
+            int Result_Carry_Over = 0;
+
+            if (list_a.Count > list_b.Count)
+            {
+                for (int i = list_a.Count - list_b.Count; i > 0; i--)
+                    list_b.Add(0);
+            }
+            else if (list_a.Count < list_b.Count)
+            {
+                for (int i = list_b.Count - list_a.Count; i > 0; i--)
+                    list_a.Add(0);
+            }
+            else
+                ;
+
+            for (int i = 0; i < list_a.Count(); i++)
+            {
+                list_result.Add(list_a[i] + list_b[i]);
+
+                if (Result_Carry_Over == 1)
+                    list_result[i]++;
+
+                if(list_result[i] > 999999999999999999)
+                {
+                    Result_Carry_Over = 1;
+                    list_result[i] -= 1000000000000000000;
+                }
+                else
+                    Result_Carry_Over = 0;
+            }
+
+            if(Result_Carry_Over == 1)
+                list_result.Add(1);
+
+            return list_result;
+        }
+
+        public static string Minus_UnlimitedDataSize_1Digit(string a, string b)
+        {
+            List<int> list_a = new List<int>();
+            int count_a_Decimal = 0;
+            List<int> list_b = new List<int>();
+            int count_b_Decimal = 0;
+            List<int> list_result_minus = new List<int>();
+
+            bool isDecimal = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                int temp_int;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(a.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_a_Decimal++;
+
+                        list_a.Insert(0, temp_int);
+                    }
+                }
+                
+                isDecimal = false;
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (b.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(b.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_b_Decimal++;
+
+                        list_b.Insert(0, temp_int);
+                    }
+                }
+
+                if (count_a_Decimal > count_b_Decimal)
+                {
+                    for (int i = 0; i < count_a_Decimal - count_b_Decimal; i++)
+                        list_b.Insert(0, 0);
+                }
+                if (count_a_Decimal < count_b_Decimal)
+                {
+                    for (int i = 0; i < count_b_Decimal - count_a_Decimal; i++)
+                        list_a.Insert(0, 0);
+                }
+                else
+                    ;
+
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("You have entered non-numeric characters");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e);
+            }
+
+            list_result_minus = Minus_UnlimitedDataSize_1Digit(list_a, list_b).ToList();
+
+            string string_result = "";
+
+            if(list_result_minus.Last() == -1)
+                string_result += "-";
+            else
+                string_result += list_result_minus.Last().ToString();
+
+            for (int i = list_result_minus.Count() - 2; i >= 0; i--)
+                string_result += list_result_minus[i].ToString();
+
+            // when either a or b has decimal
+            if (count_a_Decimal > 0 || count_b_Decimal > 0)
+            {
+                bool isNegative = false;
+                if (string_result.Substring(0, 1) == "-")
+                {
+                    isNegative = true;
+                    string_result = string_result.Remove(0, 1);
+                }
+
+                if (count_a_Decimal >= count_b_Decimal)
+                {
+                    if(string_result.Count() < count_a_Decimal)
+                    {
+                        for(int i = count_a_Decimal - string_result.Count(); i >= 0; i--)
+                            string_result = "0" + string_result;
+                    }
+                    string_result = string_result.Insert(string_result.Count() - count_a_Decimal, ".");
+                }
+                else //(count_a_Decimal < count_b_Decimal)
+                {
+                    if (string_result.Count() < count_b_Decimal)
+                    {
+                        for (int i = count_b_Decimal - string_result.Count(); i >= 0; i--)
+                            string_result = "0" + string_result;
+                    }
+                    string_result = string_result.Insert(string_result.Count() - count_b_Decimal, ".");
+                }
+
+                while (string_result[string_result.Length - 1] == '0')
+                    string_result = string_result.Remove(string_result.Length - 1);
+
+                if (isNegative)
+                    string_result = "-" + string_result;
+            }
+
+            if (string_result[0] == '.')
+                string_result = "0" + string_result;
+
+            if (string_result[0] == '-' && string_result[1] == '.')
+                string_result = string_result.Insert(1, "0");
+
+            return string_result;
+        }
+
+        public static List<int> Minus_UnlimitedDataSize_1Digit(List<int> list_a, List<int> list_b)
+        {
+            List<int> list_result_minus = new List<int>();
+
+            int index = 0;
+            int nextDigit_Deduct1 = 0;
+            int result_minus;
+            bool isPositiveResult = true;
+
+            if (CompareTo_UnlimitedDataSize(list_a, list_b) == 1)
+            {
+                foreach (int _list_a in list_a)
+                {
+                    if (index < list_b.Count)
+                    {
+                        if (_list_a + nextDigit_Deduct1 >= list_b[index])
+                        {
+                            result_minus = _list_a - list_b[index] + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = 0;
+                        }
+                        else
+                        {
+                            result_minus = 10 + _list_a - list_b[index] + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = -1;
+                        }
+                        index++;
+                    }
+                    else
+                    {
+                        if (_list_a + nextDigit_Deduct1 >= 0)
+                        {
+                            result_minus = _list_a + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = 0;
+                        }
+                        else
+                        {
+                            result_minus = 10 + _list_a + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = -1;
+                        }
+                            
+                    }
+
+                    list_result_minus.Add(result_minus);
+                }
+            }
+            else if (CompareTo_UnlimitedDataSize(list_a, list_b) == 0)
+            {
+                // when a and b are exactly same value, a - b = 0
+                list_result_minus.Add(0);
+            }
+            else
+            {
+                foreach (int _list_b in list_b)
+                {
+                    if (index < list_a.Count)
+                    {
+                        if (_list_b + nextDigit_Deduct1 >= list_a[index])
+                        {
+                            result_minus = _list_b - list_a[index] + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = 0;
+                        }
+                        else
+                        {
+                            result_minus = 10 + _list_b - list_a[index] + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = -1;
+                        }
+                        index++;
+                    }
+                    else
+                    {
+                        if (nextDigit_Deduct1 != 0)
+                        {
+                            result_minus = _list_b + nextDigit_Deduct1;
+                            nextDigit_Deduct1 = 0;
+                        }
+                        else
+                            result_minus = _list_b;
+                    }
+
+                    list_result_minus.Add(result_minus);
+                }
+
+                isPositiveResult = false;
+            }
+
+            // if result more than or equal to 2 digits, remove if biggest index element are 0
+            while (list_result_minus.Count() > 1 && list_result_minus.Last() == 0)
+                list_result_minus.RemoveAt(list_result_minus.Count - 1);
+
+            if (!isPositiveResult)
+                list_result_minus.Add(-1);
+
+            return list_result_minus;
+        }
+
+        public static string Minus_UnlimitedDataSize_long(string a, string b)
+        {
+            List<long> list_a = new List<long>();
+            int count_a_Decimal = 0;
+            List<long> list_b = new List<long>();
+            int count_b_Decimal = 0;
+            List<long> list_result = new List<long>();
+
+            bool string_a_firstCharacterNegative = false;
+            bool string_b_firstCharacterNegative = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                long temp_long_1digit;
+                long temp_long = 0;
+                int curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+
+                // check if string a has any decimal & count of decimal digits
+                count_a_Decimal = a.IndexOf('.');
+                if (count_a_Decimal != -1)
+                    count_a_Decimal = a.Length - 1 - count_a_Decimal;
+                else
+                    count_a_Decimal = 0;
+                // check if string b has any decimal & count of decimal digits
+                count_b_Decimal = b.IndexOf('.');
+                if (count_b_Decimal != -1)
+                    count_b_Decimal = b.Length - 1 - count_b_Decimal;
+                else
+                    count_b_Decimal = 0;
+                // add 0 at the back of decimal to make count_a_Decimal == count_b_Decimal
+                if (count_a_Decimal > 0 || count_b_Decimal > 0)
+                {
+                    if (count_a_Decimal > count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_a_Decimal - count_b_Decimal; i++)
+                            b += "0";
+
+                        count_b_Decimal = count_a_Decimal;
+                    }
+                    else if (count_a_Decimal < count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_b_Decimal - count_a_Decimal; i++)
+                            a += "0";
+
+                        count_a_Decimal = count_b_Decimal;
+                    }
+                    else
+                        ;
+                }
+
+                // convert string a to list_a
+                // check if string a first character is '-'
+                if (a[0] == '-')
+                {
+                    string_a_firstCharacterNegative = true;
+                    a = a.Remove(0, 1);
+                }
+                // Save string a's whole number into list_a
+                for (int i = a.Length - 1; i >= 0; i--)
+                {
+                    if (a.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(a.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 18 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 18));
+
+                        if ((curr_digit + 1) % 18 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_a.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 18 != 0)
+                    list_a.Add(temp_long);     // insert remaining most significant digit temp_int
+
+                // convert string b to list_b
+                temp_long = 0;
+                curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                // check if string a first character is '-'
+                if (b[0] == '-')
+                {
+                    string_b_firstCharacterNegative = true;
+                    b = b.Remove(0, 1);
+                }
+                else
+                    string_b_firstCharacterNegative = false;
+                for (int i = b.Length - 1; i >= 0; i--)
+                {
+                    if (b.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(b.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 18 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 18));
+
+                        if ((curr_digit + 1) % 18 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_b.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 18 != 0)
+                    list_b.Add(temp_long);     // insert remaining most significant digit temp_long
+
+                if (list_a.Count() > list_b.Count())
+                {
+                    for (int i = 0; i < list_a.Count() - list_b.Count(); i++)
+                        list_b.Add(0);
+                }
+                else if (list_a.Count() < list_b.Count())
+                {
+                    for (int i = 0; i < list_b.Count() - list_a.Count(); i++)
+                        list_a.Add(0);
+                }
+                else
+                    ;
+
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("You have entered non-numeric characters");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e);
+            }
+
+            // compute minus
+            bool isNegativeResult = false;
+            if (!string_a_firstCharacterNegative && !string_b_firstCharacterNegative)    // a - b
+            {
+                list_result = Minus_UnlimitedDataSize_long(list_a, list_b).ToList();
+
+                if (list_result.Last() < 0)
+                {
+                    isNegativeResult = true;
+                    list_result[list_result.Count() - 1] *= -1;
+                }
+            }
+            else if (!string_a_firstCharacterNegative && string_b_firstCharacterNegative)    // a - (-b) = a + b
+            {
+                list_result = Addition_UnlimitedDataSize_long(list_a, list_b).ToList();
+            }
+            else if (string_a_firstCharacterNegative && !string_b_firstCharacterNegative)    // -a - b = -(a + b)
+            {
+                list_result = Addition_UnlimitedDataSize_long(list_a, list_b).ToList();
+
+                isNegativeResult = true;
+            }
+            else  // -a + b = b - a
+            {
+                list_result = Minus_UnlimitedDataSize_long(list_b, list_a).ToList();
+
+                if (list_result.Last() < 0)
+                {
+                    isNegativeResult = true;
+                    list_result[list_result.Count() - 1] *= -1;
+                }
+            }
+
+            string string_result = "";
+
+            string_result = list_result[list_result.Count() - 1].ToString();
+            for (int i = list_result.Count() - 2; i >= 0; i--)
+            {
+                if (list_result[i] == 0)
+                    string_result += "000000000000000000";
+                else
+                {
+                    long temp = 100000000000000000;
+                    while (list_result[i] < temp)
+                    {
+                        string_result += "0";
+                        temp /= 10;
+                    }
+
+                    string_result += list_result[i];
+                }
+            }
+
+            // when either a or b has decimal
+            if (count_a_Decimal > 0 || count_b_Decimal > 0)
+            {
+                if (string_result.Length < count_a_Decimal)
+                {
+                    for (int i = count_a_Decimal - string_result.Length; i >= 0; i--)
+                        string_result = "0" + string_result;
+                }
+
+                // Previously set count_a_Decimal == count_b_Decimal
+                string_result = string_result.Insert(string_result.Count() - count_a_Decimal, ".");
+
+                while (string_result.EndsWith("0"))
+                    string_result = string_result.TrimEnd('0');
+
+            }
+
+            if (isNegativeResult)
+                string_result = "-" + string_result;
+
+            return string_result;
+        }
+
+        public static List<long> Minus_UnlimitedDataSize_long(List<long> list_a, List<long> list_b)
+        {
+            List<long> list_result = new List<long>();
+            int Result_Carry_Over = 0;
+
+            if (list_a.Count > list_b.Count)
+            {
+                for (int i = list_a.Count - list_b.Count; i > 0; i--)
+                    list_b.Add(0);
+            }
+            else if (list_a.Count < list_b.Count)
+            {
+                for (int i = list_b.Count - list_a.Count; i > 0; i--)
+                    list_a.Add(0);
+            }
+            else
+                ;
+
+            if (CompareTo_UnlimitedDataSize_long(list_a, list_b) == 0)
+            {
+                list_result.Add(0);
+            }
+            else if (CompareTo_UnlimitedDataSize_long(list_a, list_b) == 1)
+            {
+                for (int i = 0; i < list_a.Count(); i++)
+                {
+                    if (list_a[i] > list_b[i])
+                    {
+                        list_result.Add(list_a[i] - list_b[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = 0;
+                    }
+                    else if (list_a[i] == list_b[i])
+                    {
+                        list_result.Add(0);
+
+                        if (Result_Carry_Over == -1)
+                        {
+                            list_result[i] = 999999999999999999;
+                            Result_Carry_Over = -1;
+                        }
+                        else
+                            Result_Carry_Over = 0;
+                    }
+                    else
+                    {
+                        list_result.Add(1000000000000000000 + list_a[i] - list_b[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = -1;
+                    }
+                }
+            }
+            else  // if (CompareTo_UnlimitedDataSize_long(list_a, list_b, list_a_Decimal, list_b_Decimal) == -1)
+            {
+                for (int i = 0; i < list_b.Count() - 1; i++)
+                {
+                    if (list_b[i] > list_a[i])
+                    {
+                        list_result.Add(list_b[i] - list_a[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = 0;
+                    }
+                    else if (list_b[i] == list_a[i])
+                    {
+                        list_result.Add(0);
+
+                        if (Result_Carry_Over == -1)
+                        {
+                            list_result[i] = 999999999999999999;
+                            Result_Carry_Over = -1;
+                        }
+                        else
+                            Result_Carry_Over = 0;
+                    }
+                    else
+                    {
+                        list_result.Add(1000000000000000000 + list_b[i] - list_a[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = -1;
+                    }
+                }
+
+                // most significant long data
+                list_result.Add(list_b.Last() - list_a.Last());
+                if (Result_Carry_Over == -1)
+                    list_result[list_result.Count - 1]--;
+
+                // remove most significant whole number if they are zero
+                while(list_result.Last() == 0 && list_result.Count() > 1)
+                    list_result.RemoveAt(list_result.Count() - 1);
+
+                list_result[list_result.Count - 1] *= -1;   //list_a < list_b
+            }
+
+            return list_result;
+        }
+
+        public static string Multiplication_UnlimitedDataSize_1Digit(string a, string b)
+        {
+            List<int> list_a = new List<int>();
+            List<int> list_b = new List<int>();
+            List<int> list_result_multiplication = new List<int>();
+
+            bool isDecimal = false;
+            int count_Decimal = 0;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                int temp_int;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(a.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_Decimal++;
+
+                        list_a.Insert(0, temp_int);
+                    }
+                }
+
+                // remove 0 on right of a_decimal
+                if(isDecimal)
+                {
+                    while (list_a[0] == 0)
+                    {
+                        list_a.RemoveAt(0);
+                        count_Decimal--;
+                    }
+                }
+
+                isDecimal = false;
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (b.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(b.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_Decimal++;
+                        
+                        list_b.Insert(0, temp_int);
+                    }
+                }
+
+                // remove 0 on right of b_decimal
+                if (isDecimal)
+                {
+                    while (list_b[0] == 0)
+                    {
+                        list_b.RemoveAt(0);
+                        count_Decimal--;
+                    }
+                        
+                }
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("You have entered non-numeric characters");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e);
+            }
+
+            list_result_multiplication = Multiplication_UnlimitedDataSize_1Digit(list_a, list_b).ToList();
+
+            string string_result_multiplication = "";
+
+            for(int i = list_result_multiplication.Count() - 1; i >= 0; i--)
+                string_result_multiplication += list_result_multiplication[i].ToString();
+
+            // when either a & b has decimal
+            if (count_Decimal > 0)
+            {
+                string_result_multiplication = string_result_multiplication.Insert(string_result_multiplication.Count() - count_Decimal, ".");
+
+                while (string_result_multiplication[string_result_multiplication.Length - 1] == '0')
+                    string_result_multiplication = string_result_multiplication.Remove(string_result_multiplication.Length - 1);
+            }
+
+            return string_result_multiplication;
+        }
+
+        public static List<int> Multiplication_UnlimitedDataSize_1Digit(List<int> list_a, List<int> list_b)
+        {
+            List<int> list_result_multiplication = new List<int>();
+
+            int curr_digit = 0;
+            int curr_digit_b = 0;
+            foreach (int _b in list_b)
+            {
+                foreach (int _a in list_a)
+                {
+                    int _temp_result_mutiplication = _a * _b;
+                    if (list_result_multiplication.Count == curr_digit + curr_digit_b)
+                        list_result_multiplication.Add(_temp_result_mutiplication % 10);
+                    else
+                    {
+                        list_result_multiplication[curr_digit + curr_digit_b] += _temp_result_mutiplication % 10;
+                        if (list_result_multiplication[curr_digit + curr_digit_b] > 9)
+                        {
+                            if (list_result_multiplication.Count == curr_digit + curr_digit_b + 1)
+                                list_result_multiplication.Add((int)(list_result_multiplication[curr_digit + curr_digit_b] / 10));
+                            else
+                                list_result_multiplication[curr_digit + curr_digit_b + 1] += (int)(list_result_multiplication[curr_digit + curr_digit_b] / 10);
+
+                            list_result_multiplication[curr_digit + curr_digit_b] %= 10;
+                        }
+                    }
+
+                    if (_temp_result_mutiplication > 9)
+                    {
+                        if (list_result_multiplication.Count == curr_digit + curr_digit_b + 1)
+                            list_result_multiplication.Add((int)(_temp_result_mutiplication / 10));
+                        else
+                        {
+                            list_result_multiplication[curr_digit + curr_digit_b + 1] += (int)(_temp_result_mutiplication / 10);
+                            if (list_result_multiplication[curr_digit + curr_digit_b + 1] > 9)
+                            {
+                                if (list_result_multiplication.Count == curr_digit + curr_digit_b + 2)
+                                    list_result_multiplication.Add((int)(list_result_multiplication[curr_digit + curr_digit_b + 1] / 10));
+                                else
+                                    list_result_multiplication[curr_digit + curr_digit_b + 2] += (int)(list_result_multiplication[curr_digit + curr_digit_b + 1] / 10);
+
+                                list_result_multiplication[curr_digit + curr_digit_b + 1] %= 10;
+                            }
+                        }
+
+                    }
+
+                    curr_digit++;
+                }
+
+                ++curr_digit_b;
+                curr_digit = 0;
+            }
+
+            return list_result_multiplication;
+        }
+
+        public static string Multiplication_UnlimitedDataSize_long(string a, string b)
+        {
+            List<long> list_a = new List<long>();
+            int count_a_Decimal = 0;
+            List<long> list_b = new List<long>();
+            int count_b_Decimal = 0;
+            List<long> list_result = new List<long>();
+
+            bool string_a_firstCharacterNegative = false;
+            bool string_b_firstCharacterNegative = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                // convert string a to list_a
+                long temp_long_1digit;
+                long temp_long = 0;
+                int curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                // check if string a first character is '-'
+                if (a[0] == '-')
+                {
+                    string_a_firstCharacterNegative = true;
+                    a = a.Remove(0, 1);
+                }
+                // check if string a has any decimal & count of decimal digits
+                count_a_Decimal = a.IndexOf('.');
+                if (count_a_Decimal != -1)
+                    count_a_Decimal = a.Length - 1 - count_a_Decimal;
+                else
+                    count_a_Decimal = 0;
+                // Save string a's whole number into list_a
+                for (int i = a.Length - 1; i >= 0; i--)
+                {
+                    if(a.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(a.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 9 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 9));
+
+                        if ((curr_digit + 1) % 9 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_a.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 9 != 0)
+                    list_a.Add(temp_long);     // insert remaining most significant digit temp_int
+
+                // convert string b to list_b
+                temp_long = 0;
+                curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                // check if string a first character is '-'
+                if (b[0] == '-')
+                {
+                    string_b_firstCharacterNegative = true;
+                    b = b.Remove(0, 1);
+                }
+                else
+                    string_b_firstCharacterNegative = false;
+                // check if string b has any decimal & count of decimal digits
+                count_b_Decimal = b.IndexOf('.');
+                if (count_b_Decimal != -1)
+                    count_b_Decimal = b.Length - 1 - count_b_Decimal;
+                else
+                    count_b_Decimal = 0;
+                for (int i = b.Length - 1; i >= 0; i--)
+                {
+                    if (b.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(b.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 9 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 9));
+
+                        if ((curr_digit + 1) % 9 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_b.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 9 != 0)
+                    list_b.Add(temp_long);     // insert remaining most significant digit temp_long
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("You have entered non-numeric characters");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e);
+            }
+
+            // compute multiple
+            bool isNegative = false;
+            List<long> tuple_list_result;
+            if ((!string_a_firstCharacterNegative && !string_b_firstCharacterNegative) || 
+                (string_a_firstCharacterNegative && string_b_firstCharacterNegative))    // a * b OR -a * -b
+            {
+                tuple_list_result = Multiplication_UnlimitedDataSize_long(list_a, list_b);
+
+                list_result = tuple_list_result.ToList();
+            }
+            else // a * (-b) = -(a * b) OR (-a) * b = -(a * b)
+            {
+                tuple_list_result = Multiplication_UnlimitedDataSize_long(list_a, list_b);
+                list_result = tuple_list_result.ToList();
+
+                isNegative = true;
+            }
+
+            // Result into string
+            string string_result = "";
+            string_result += list_result.Last().ToString();
+            for (int i = list_result.Count() - 2; i >= 0; i--)
+            {
+                if (list_result[i] == 0)
+                    string_result += "000000000";
+                else
+                {
+                    long temp = 100000000;
+                    while (list_result[i] < temp)
+                    {
+                        string_result += "0";
+                        temp /= 10;
+                    }
+
+                    string_result += list_result[i];
+                }
+            }
+            
+            if (count_a_Decimal + count_b_Decimal > 0)
+            {
+                if(string_result.Count() < (count_a_Decimal + count_b_Decimal))
+                {
+                    for(int i = count_a_Decimal + count_b_Decimal - string_result.Length; i >= 0; i--)
+                        string_result = "0" + string_result;
+                }
+                string_result = string_result.Insert(string_result.Count() - count_a_Decimal - count_b_Decimal, ".");
+
+                if (string_result.EndsWith("0"))
+                    string_result = string_result.TrimEnd('0');
+            }
+
+            if (isNegative)
+                string_result = "-" + string_result;
+
+            return string_result;
+        }
+
+        public static List<long> Multiplication_UnlimitedDataSize_long(List<long> list_a, List<long> list_b)
+        {
+            List<long> list_result = new List<long>();
+
+            int curr_digit = 0;
+            int curr_digit_b = 0;
+
+            foreach (long _b in list_b)
+            {
+                foreach (long _a in list_a)
+                {
+                    long _temp_result_mutiplication = _a * _b;
+                    if (list_result.Count == curr_digit + curr_digit_b)
+                        list_result.Add(_temp_result_mutiplication % 1000000000);
+                    else
+                    {
+                        list_result[curr_digit + curr_digit_b] += _temp_result_mutiplication % 1000000000;
+                        if (list_result[curr_digit + curr_digit_b] > 999999999)
+                        {
+                            if (list_result.Count == curr_digit + curr_digit_b + 1)
+                                list_result.Add((long)(list_result[curr_digit + curr_digit_b] / 1000000000));
+                            else
+                                list_result[curr_digit + curr_digit_b + 1] += (long)(list_result[curr_digit + curr_digit_b] / 1000000000);
+
+                            list_result[curr_digit + curr_digit_b] %= 1000000000;
+                        }
+                    }
+
+                    if (_temp_result_mutiplication > 999999999)
+                    {
+                        if (list_result.Count == curr_digit + curr_digit_b + 1)
+                            list_result.Add((long)(_temp_result_mutiplication / 1000000000));
+                        else
+                        {
+                            list_result[curr_digit + curr_digit_b + 1] += (long)(_temp_result_mutiplication / 1000000000);
+                            if (list_result[curr_digit + curr_digit_b + 1] > 999999999)
+                            {
+                                if (list_result.Count == curr_digit + curr_digit_b + 2)
+                                    list_result.Add((long)(list_result[curr_digit + curr_digit_b + 1] / 1000000000));
+                                else
+                                    list_result[curr_digit + curr_digit_b + 2] += (long)(list_result[curr_digit + curr_digit_b + 1] / 1000000000);
+
+                                list_result[curr_digit + curr_digit_b + 1] %= 1000000000;
+                            }
+                        }
+
+                    }
+
+                    curr_digit++;
+                }
+
+                ++curr_digit_b;
+                curr_digit = 0;
+            }
+
+            while (list_result.Count > 1 && list_result.Last() == 0)
+                list_result.RemoveAt(list_result.Count - 1);
+
+            return list_result;
+        }
+
+        public static string Division_UnlimitedDataSize_1Digit(string a, string b)
+        {
+            List<int> list_a = new List<int>();
+            List<int> list_b = new List<int>();
+            List<int> list_result_division = new List<int>();
+            List<int> list_result_division_residue = new List<int>();
+            List<int> list_result_division_decimal = new List<int>();
+            Tuple<List<int>, List<int>> tuple_Lists_Result_Residue = new Tuple<List<int>, List<int>>(new List<int>(), new List<int>());
+
+            int count_a_Decimal = 0;
+            int count_b_Decimal = 0;
+            int count_Result_DecimalPosition = 0;
+            bool isDecimal = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                int temp_int;
+                isDecimal = false;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(a.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_a_Decimal++;
+
+                        list_a.Insert(0, temp_int);
+                    }
+                }
+
+                while (list_a.Last() == 0)
+                    list_a.RemoveAt(list_a.Count() - 1);
+
+                // remove 0 on right of a_decimal
+                if (isDecimal)
+                {
+                    while (list_a[0] == 0)
+                    {
+                        list_a.RemoveAt(0);
+                        count_a_Decimal--;
+                    }
+                }
+
+                isDecimal = false;
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (b.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(b.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_b_Decimal++;
+
+                        list_b.Insert(0, temp_int);
+                    }
+                }
+
+                while (list_b.Last() == 0)
+                    list_b.RemoveAt(list_b.Count() - 1);
+
+                // remove 0 on right of b_decimal
+                if (isDecimal)
+                {
+                    while (list_b[0] == 0)
+                    {
+                        list_b.RemoveAt(0);
+                        count_b_Decimal--;
+                    }
+
+                }
+
+                if (count_a_Decimal < count_b_Decimal)
+                {
+                    for (int i = 0; i < (count_b_Decimal - count_a_Decimal); i++)
+                        list_a.Insert(0, 0);
+
+                    count_a_Decimal = 0;
+                    count_b_Decimal = 0;
+                }
+                else if (count_a_Decimal > count_b_Decimal)
+                {
+                    for (int i = 0; i < (count_a_Decimal - count_b_Decimal); i++)
+                        list_b.Insert(0, 0);
+
+                    count_a_Decimal = 0;
+                    count_b_Decimal = 0;
+                }
+                else
+                    ;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("String a or String b are not integer");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Overflow exception");
+            }
+
+            // compute division
+            if (CompareTo_UnlimitedDataSize(list_a, list_b) > 0)
+            {
+                tuple_Lists_Result_Residue = Division_UnlimitedDataSize_1Digit(list_a, list_b);
+                list_result_division = tuple_Lists_Result_Residue.Item1.ToList();
+                while (list_result_division.Last() == 0)
+                    list_result_division.RemoveAt(list_result_division.Count() - 1);
+
+                if (tuple_Lists_Result_Residue.Item2.Count > 0)
+                {
+                    list_result_division_residue = tuple_Lists_Result_Residue.Item2.ToList();
+                }
+            }
+            else if (CompareTo_UnlimitedDataSize(list_a, list_b) == 0)
+            {
+                return "1";
+            }
+            else
+            {
+                list_result_division_residue = list_a.ToList();
+            }
+
+            // This segment code compute out decimal result of division
+            if (list_result_division_residue.Count() > 0)
+            {
+                count_Result_DecimalPosition = list_b.Count() - list_result_division_residue.Count();
+
+                for (int i = 0; i < count_Result_DecimalPosition; i++)
+                    list_result_division_residue.Insert(0, 0);
+                if (CompareTo_UnlimitedDataSize(list_result_division_residue, list_b) < 0)
+                {
+                    count_Result_DecimalPosition += 1;
+                    list_result_division_residue.Insert(0, 0);
+                }
+
+                // Add 50 digit '0' at the back of list_result_division_residue
+                for (int i = 0; i < list_b.Count() * 50; i++)
+                    list_result_division_residue.Insert(0, 0);
+
+                tuple_Lists_Result_Residue = Division_UnlimitedDataSize_1Digit(list_result_division_residue, list_b);
+
+                list_result_division_decimal = tuple_Lists_Result_Residue.Item1.ToList();
+
+                if (tuple_Lists_Result_Residue.Item2.Count() > 0)
+                {
+                    Tuple<List<int>, List<int>> tuple_Lists_half_list_b = Division_UnlimitedDataSize_1Digit(list_b, new List<int>() { 2 });
+
+                    List<int> lists_half_list_b = tuple_Lists_half_list_b.Item1.ToList();
+                    if (tuple_Lists_half_list_b.Item2.Count() > 0)
+                        lists_half_list_b[0]++;
+
+                    if (CompareTo_UnlimitedDataSize(tuple_Lists_Result_Residue.Item2, lists_half_list_b) >= 0)
+                        list_result_division_decimal[0]++;
+                }
+
+                while (list_result_division_decimal[0] == 0)
+                    list_result_division_decimal.RemoveAt(0);
+
+                if (count_Result_DecimalPosition - 1 > 0)
+                    for (int i = 0; i < count_Result_DecimalPosition - 1; i++)
+                        list_result_division_decimal.Add(0);
+            }
+            // This segment code compute out decimal result of division
+
+            // print result of division
+            string string_result = "";
+            if (list_result_division.Count() > 0)
+            {
+                foreach (int _result_division in list_result_division)
+                    string_result = _result_division.ToString() + string_result;
+            }
+            else
+                string_result += "0";
+
+            if (list_result_division_decimal.Count > 0)
+            {
+                string_result += ".";
+
+                int count_decimal_toPrint = list_result_division_decimal.Count() - 50;
+                if (count_decimal_toPrint < 0)
+                    count_decimal_toPrint = 0;
+
+                for (int i = list_result_division_decimal.Count() - 1; i > count_decimal_toPrint; i--)
+                    string_result += list_result_division_decimal[i].ToString();
+
+                if (count_decimal_toPrint > 0)
+                {
+                    if (list_result_division_decimal[count_decimal_toPrint - 1] > 4)
+                        string_result += (list_result_division_decimal[count_decimal_toPrint] + 1).ToString();
+                    else
+                        string_result += (list_result_division_decimal[count_decimal_toPrint]).ToString();
+                }
+                else
+                    string_result += (list_result_division_decimal[count_decimal_toPrint]).ToString();
+
+            }
+
+            return string_result;
+        }
+
+        public static Tuple<List<int>, List<int>> Division_UnlimitedDataSize_1Digit(List<int> list_a, List<int> list_b)
+        {
+            List<int> list_result_division_residue = new List<int>();
+            List<int> list_division_multiplication = new List<int>();
+            List<int> list_result = new List<int>();
+
+            int temp_index_list_a_start = list_a.Count() - list_b.Count();
+
+            List<int> list_temp_2 = new List<int>();
+            List<int> list_temp_1 = list_a.GetRange(temp_index_list_a_start, list_b.Count());
+            if (CompareTo_UnlimitedDataSize(list_temp_1, list_b) < 0 && temp_index_list_a_start >= 1)
+            {
+                temp_index_list_a_start--;
+                list_temp_1.Insert(0, list_a[temp_index_list_a_start]);
+            }
+
+            while (temp_index_list_a_start > 0)
+            {
+                if (CompareTo_UnlimitedDataSize(list_temp_1, list_b) > 0)
+                {
+                    list_temp_2 = list_b.ToList();
+
+                    list_division_multiplication.Clear();
+                    list_division_multiplication.Add(1);
+                    while (CompareTo_UnlimitedDataSize(list_temp_1, list_temp_2) > 0)
+                    {
+                        list_temp_2 = Addition_UnlimitedDataSize_1Digit(list_temp_2, list_b);
+                        list_division_multiplication = Addition_UnlimitedDataSize_1Digit(list_division_multiplication, new List<int>() { 1 }).ToList();
+                    }
+
+                    if (CompareTo_UnlimitedDataSize(list_temp_1, list_temp_2) < 0)
+                    {
+                        //when list_temp_1 divided by list_b has residue
+                        list_division_multiplication = Minus_UnlimitedDataSize_1Digit(list_division_multiplication, new List<int>() { 1 }).ToList();
+                        list_temp_2 = Minus_UnlimitedDataSize_1Digit(list_temp_2, list_b).ToList();
+                        list_temp_1 = Minus_UnlimitedDataSize_1Digit(list_temp_1, list_temp_2).ToList();
+                    }
+                    else
+                        list_temp_1.Clear();
+
+                    for (int i = list_division_multiplication.Count() - 1; i >= 0; i--)
+                        list_result.Insert(0, list_division_multiplication[i]);
+                    list_division_multiplication.Clear();
+
+                    // shift temp_index_list_a_start 1 digit to the right
+                    temp_index_list_a_start--;
+                    list_temp_1.Insert(0, list_a[temp_index_list_a_start]);
+                }
+                else if (CompareTo_UnlimitedDataSize(list_temp_1, list_b) == 0)
+                {
+                    if (list_result.Count() != 0)
+                    {
+                        for (int i = 0; i < list_b.Count() - 1; i++)
+                            list_result.Insert(0, 0);
+                    }
+                    list_result.Insert(0, 1);
+
+                    // shift index list_b.Length to the right
+                    list_temp_1.Clear();
+                    if (temp_index_list_a_start - list_b.Count() >= 0)
+                    {
+                        temp_index_list_a_start -= list_b.Count();
+                        list_temp_1 = list_a.GetRange(temp_index_list_a_start, list_b.Count());
+                    }
+                    else
+                    {
+                        // if remaining list_a.Count() digits is lesser than list_b.Count()
+                        list_temp_1 = list_a.GetRange(0, temp_index_list_a_start);
+                        temp_index_list_a_start = 0;
+                    }
+                }
+                else
+                {
+                    //when list_temp_1 smaller than list_b
+
+                    // when list_temp_1 value is 0
+                    if (list_temp_1.Count() == 1 && list_temp_1[0] == 0)
+                        list_temp_1.Clear();
+
+                    temp_index_list_a_start--;
+                    list_temp_1.Insert(0, list_a[temp_index_list_a_start]);
+                    list_result.Insert(0, 0);
+                }
+            }
+
+            // when temp_index_list_a_start at index '0'
+            if (CompareTo_UnlimitedDataSize(list_temp_1, list_b) >= 0)
+            {
+                list_division_multiplication.Clear();
+                list_division_multiplication.Add(1);
+                list_temp_2 = list_b.ToList();
+                while (CompareTo_UnlimitedDataSize(list_temp_1, list_temp_2) > 0)
+                {
+                    list_temp_2 = Addition_UnlimitedDataSize_1Digit(list_temp_2, list_b).ToList();
+                    list_division_multiplication = Addition_UnlimitedDataSize_1Digit(list_division_multiplication, new List<int>() { 1 }).ToList();
+                }
+
+                if (CompareTo_UnlimitedDataSize(list_temp_1, list_temp_2) < 0)
+                {
+                    //when list_temp_1 divided by list_b has residue
+                    list_division_multiplication = Minus_UnlimitedDataSize_1Digit(list_division_multiplication, new List<int>() { 1 }).ToList();
+                    list_temp_2 = Minus_UnlimitedDataSize_1Digit(list_temp_2, list_b).ToList();
+                    list_result_division_residue = Minus_UnlimitedDataSize_1Digit(list_temp_1, list_temp_2).ToList();
+                    // if no residue, do nothing
+                }
+
+                for (int i = list_division_multiplication.Count() - 1; i >= 0; i--)
+                    list_result.Insert(0, list_division_multiplication[i]);
+                list_division_multiplication.Clear();
+            }
+            else
+            {
+                list_result.Insert(0, 0);
+                if (list_temp_1.Count() != 1 || list_temp_1[0] != 0)
+                    list_result_division_residue = list_temp_1.ToList();
+                else
+                    list_result_division_residue.Clear();
+            }
+
+            return new Tuple<List<int>, List<int>>(list_result, list_result_division_residue);
+        }
+
+
+        public static string Division_UnlimitedDataSize_long(string a, string b)
+        {
+            List<long> list_a = new List<long>();
+            int count_a_Decimal = 0;
+            List<long> list_b = new List<long>();
+            int count_b_Decimal = 0;
+            List<long> list_result = new List<long>();
+            List<long> list_result_division_residue = new List<long>();
+            List<long> list_result_division_decimal = new List<long>();
+            Tuple<List<long>, List<long>> tuple_Lists_Result_Residue;
+
+            int count_Result_DecimalPosition = 0;
+            bool isDecimal = false;
+
+            bool string_a_firstCharacterNegative = false;
+            bool string_b_firstCharacterNegative = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                long temp_long_1digit;
+                long temp_long = 0;
+                int curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                isDecimal = false;
+
+                // check if string a has any decimal & count of decimal digits
+                count_a_Decimal = a.IndexOf('.');
+                if (count_a_Decimal != -1)
+                    count_a_Decimal = a.Length - 1 - count_a_Decimal;
+                else
+                    count_a_Decimal = 0;
+                // check if string b has any decimal & count of decimal digits
+                count_b_Decimal = b.IndexOf('.');
+                if (count_b_Decimal != -1)
+                    count_b_Decimal = b.Length - 1 - count_b_Decimal;
+                else
+                    count_b_Decimal = 0;
+                // add 0 at the back of a decimal to make count_a_Decimal == count_b_Decimal
+                if (count_a_Decimal > 0 || count_b_Decimal > 0)
+                {
+                    if (count_a_Decimal > count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_a_Decimal - count_b_Decimal; i++)
+                            b += "0";
+
+                        count_b_Decimal = count_a_Decimal;
+                    }
+                    else if (count_a_Decimal < count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_b_Decimal - count_a_Decimal; i++)
+                            a += "0";
+
+                        count_a_Decimal = count_b_Decimal;
+                    }
+                    else
+                        ;
+                    
+                }
+
+                // convert string a to list_a
+                // check if string a first character is '-'
+                if (a[0] == '-')
+                {
+                    string_a_firstCharacterNegative = true;
+                    a = a.Remove(0, 1);
+                }
+                // Save string a's whole number into list_a
+                for (int i = a.Length - 1; i >= 0; i--)
+                {
+                    if (a.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(a.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 9 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 9));
+
+                        if ((curr_digit + 1) % 9 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_a.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 9 != 0)
+                    list_a.Add(temp_long);     // insert remaining most significant digit temp_int
+
+                // convert string b to list_b
+                temp_long = 0;
+                curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                                    // check if string a first character is '-'
+                if (b[0] == '-')
+                {
+                    string_b_firstCharacterNegative = true;
+                    b = b.Remove(0, 1);
+                }
+                else
+                    string_b_firstCharacterNegative = false;
+                for (int i = b.Length - 1; i >= 0; i--)
+                {
+                    if (b.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(b.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 9 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 9));
+
+                        if ((curr_digit + 1) % 9 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_b.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 9 != 0)
+                    list_b.Add(temp_long);     // insert remaining most significant digit temp_long
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("String a or String b are not integer");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Overflow exception");
+            }
+
+            // compute division
+            if (CompareTo_UnlimitedDataSize_long(list_a, list_b) > 0)
+            {
+                tuple_Lists_Result_Residue = Division_UnlimitedDataSize_long(list_a, list_b);
+                list_result = tuple_Lists_Result_Residue.Item1.ToList();
+                while (list_result.Last() == 0)
+                    list_result.RemoveAt(list_result.Count() - 1);
+
+                if (tuple_Lists_Result_Residue.Item2.Count > 0)
+                    list_result_division_residue = tuple_Lists_Result_Residue.Item2.ToList();
+                
+            }
+            else if (CompareTo_UnlimitedDataSize_long(list_a, list_b) == 0)
+            {
+                return "1";
+            }
+            else
+            {
+                list_result_division_residue = list_a.ToList();
+                count_Result_DecimalPosition = 1;
+            }
+
+            // This segment code compute out decimal result of division
+            if (list_result_division_residue.Count() > 0)
+            {
+                // number of additional decimal
+                // Add digit '0' at the back of list_result_division_residue
+                for (int j = list_b.Count() * 3 * 9; j > 0; j--)
+                {
+                    for (int i = list_result_division_residue.Count - 1; i >= 0; i--)
+                    {
+                        list_result_division_residue[i] *= 10;
+                        if (list_result_division_residue[i] > 1000000000)
+                        {
+                            long temp_long = list_result_division_residue[i] / 1000000000;
+                            if (i == list_result_division_residue.Count - 1)
+                                list_result_division_residue.Add(temp_long);
+                            else
+                                list_result_division_residue[i + 1] += list_result_division_residue[i] / 1000000000;
+                            list_result_division_residue[i] %= 1000000000;
+                        }
+                    }
+                }
+
+                tuple_Lists_Result_Residue = Division_UnlimitedDataSize_long(list_result_division_residue, list_b);
+
+                list_result_division_decimal = tuple_Lists_Result_Residue.Item1.ToList();
+
+                if (tuple_Lists_Result_Residue.Item2.Count() > 0)
+                {
+                    if (CompareTo_UnlimitedDataSize_long(Multiplication_UnlimitedDataSize_long(tuple_Lists_Result_Residue.Item2.ToList(), new List<long>() { 2 }), list_b) >= 0)
+                        list_result_division_decimal[0]++;
+                }
+            }
+            // This segment code compute out decimal result of division
+
+            // print result of division
+            string string_result = "";
+            if (list_result.Count() > 0)
+            {
+                string_result = list_result.Last().ToString();
+
+                if(list_result.Count() > 1)
+                {
+                    for (int i = list_result.Count() - 2; i >= 0; i--)
+                    {
+                        int temp_most_significant_digit_position = 100000000;
+                        while (list_result[i] < temp_most_significant_digit_position)
+                        {
+                            string_result += "0";
+                            temp_most_significant_digit_position /= 10;
+                        }
+
+                        if(list_result[i] != 0)
+                            string_result += list_result[i].ToString();
+                    }
+                }
+            }
+            else
+                string_result += "0";
+
+            if (list_result_division_decimal.Count > 0)
+            {
+                string_result += ".";
+
+                if (count_Result_DecimalPosition > 1)
+                {
+                    for (int i = 1; i < count_Result_DecimalPosition; i++)
+                        string_result += "0";
+                }
+
+                for (int i = list_result_division_decimal.Count() - 1; i >= 0; i--)
+                {
+                    int temp_most_significant_digit_position = 100000000;
+                    while (list_result_division_decimal[i] < temp_most_significant_digit_position)
+                    {
+                        string_result += "0";
+                        temp_most_significant_digit_position /= 10;
+                    } 
+
+                    string_result += list_result_division_decimal[i].ToString();
+                }
+                    
+
+                while (string_result.Last() == '0')
+                    string_result = string_result.Remove(string_result.Length - 1);
+            }
+
+            if(string_result != "0")
+            {
+                if (string_a_firstCharacterNegative != string_b_firstCharacterNegative)
+                    string_result = "-" + string_result;
+            }
+
+            return string_result;
+        }
+
+        public static Tuple<List<long>, List<long>> Division_UnlimitedDataSize_long(List<long> list_a, List<long> list_b)
+        {
+            List<long> list_result_division_residue = new List<long>();
+            List<long> list_division_multiplication = new List<long>();
+            List<long> list_result = new List<long>();
+            long temp_long = 0;
+
+            int temp_index_list_a_start = list_a.Count() - list_b.Count();
+            List<long> list_temp_2 = new List<long>();
+            List<long> list_temp_1 = list_a.GetRange(temp_index_list_a_start, list_b.Count());
+            if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_b) < 0 && temp_index_list_a_start >= 1)
+            {
+                temp_index_list_a_start--;
+                list_temp_1.Insert(0, list_a[temp_index_list_a_start]);
+            }
+
+            while (temp_index_list_a_start > 0)
+            {
+                list_division_multiplication.Clear();
+
+                if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_b) > 0)
+                {
+                    temp_long = list_temp_1.Last() / list_b.Last();
+                    
+                    if(temp_long <= 1)
+                    {
+                        temp_long = (list_temp_1[list_temp_1.Count -1] * 1000000000 + list_temp_1[list_temp_1.Count - 2]) / list_b.Last();
+                    }
+
+                    list_division_multiplication.Add(temp_long);
+                    for (int i = list_temp_1.Count - 1 - list_b.Count; i > 0; i--)
+                        list_division_multiplication.Insert(0, 0);
+
+                    list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+
+                    
+                    // alternate approach from below, deduct from most significant digits
+                    /*
+                    if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_temp_2) < 0)
+                    {
+                        Minus_One_UnlimitedDataSize_int(list_division_multiplication);
+                        list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+                    }
+                    */
+
+                    long temp_toMinus = 100000000;
+                    while (CompareTo_UnlimitedDataSize_long(list_temp_1, list_temp_2) < 0)
+                    {
+                        while (list_division_multiplication[0] < temp_toMinus && temp_toMinus > 1)
+                            temp_toMinus /= 10;
+                        list_division_multiplication[0] -= temp_toMinus;
+
+                        list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+
+                        if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_temp_2) > 0)
+                        {
+                            if (temp_toMinus != 1)
+                            {
+                                list_division_multiplication[0] += temp_toMinus;
+                                list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+
+                                if (temp_toMinus > 1)
+                                    temp_toMinus /= 10;
+                            }
+
+                        }
+                    }
+
+                    // working
+                    /*
+                    while (CompareTo_UnlimitedDataSize_long(list_temp_1, list_temp_2) < 0)
+                    {
+
+                        Minus_One_UnlimitedDataSize_int(list_division_multiplication);
+                        list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+                    }
+                    */
+
+                    // set list_temp_1 to new remaining of division
+                    list_temp_1 = Minus_UnlimitedDataSize_int(list_temp_1, list_temp_2).ToList();
+
+                    // add the next list_a digit
+                    temp_index_list_a_start--;
+                    list_temp_1.Insert(0, list_a[temp_index_list_a_start]);
+
+                    
+                    //remove 0 at last
+                    while (list_temp_1.Count() > 1 && list_temp_1.Last() == 0)
+                        list_temp_1.RemoveAt(list_temp_1.Count - 1);
+
+                    for (int i = list_division_multiplication.Count() - 1; i >= 0; i--)
+                        list_result.Insert(0, list_division_multiplication[i]);
+                }
+                else if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_b) == 0)
+                {
+                    if (list_result.Count() != 0)
+                    {
+                        for (int i = 0; i < list_b.Count() - 1; i++)
+                            list_result.Insert(0, 0);
+                    }
+                    list_result.Insert(0, 1);
+
+                    list_temp_1.Clear();
+                    list_temp_1 = list_a.GetRange(temp_index_list_a_start, list_b.Count());
+                }
+                else
+                {
+                    temp_index_list_a_start--;
+                    list_temp_1.Insert(0, list_a[temp_index_list_a_start]);
+                    list_result.Insert(0, 0);
+                }
+            }
+
+            // when temp_index_list_a_start at index '0'
+            if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_b) > 0)
+            {
+                list_division_multiplication.Clear();
+
+                temp_long = list_temp_1.Last() / list_b.Last();
+                if (temp_long == 0)
+                    temp_long = (list_temp_1[list_temp_1.Count - 1] * 1000000000 + list_temp_1[list_temp_1.Count - 2]) / list_b.Last();
+
+                list_division_multiplication.Add(temp_long);
+                for (int i = list_temp_1.Count - 1 - list_b.Count; i > 0; i--)
+                    list_division_multiplication.Insert(0, 0);
+
+                list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+                while (CompareTo_UnlimitedDataSize_long(list_temp_1, list_temp_2) < 0)
+                {
+
+                    Minus_One_UnlimitedDataSize_int(list_division_multiplication);
+                    list_temp_2 = Multiplication_UnlimitedDataSize_long(list_division_multiplication, list_b).ToList();
+                }
+                list_temp_1 = Minus_UnlimitedDataSize_int(list_temp_1, list_temp_2).ToList();
+
+                for (int i = list_division_multiplication.Count() - 1; i >= 0; i--)
+                    list_result.Insert(0, list_division_multiplication[i]);
+                list_result_division_residue = list_temp_1.ToList();
+            }
+            else if (CompareTo_UnlimitedDataSize_long(list_temp_1, list_b) == 0)
+                list_result.Insert(0, 1);
+            else
+            {
+                if(list_result.Count() == 0)
+                    list_result.Add(0);
+                list_result_division_residue = list_temp_1.ToList();
+            }
+
+            if (list_result_division_residue.Count > 0 && list_result_division_residue.Last() == 0)
+                list_result_division_residue.RemoveAt(list_result_division_residue.Count - 1);
+
+            return new Tuple<List<long>, List<long>>(list_result, list_result_division_residue);
+        }
+
+        public static List<long> Minus_UnlimitedDataSize_int(List<long> list_a, List<long> list_b)
+        {
+            List<long> list_result = new List<long>();
+            int Result_Carry_Over = 0;
+
+            if (list_a.Count > list_b.Count)
+            {
+                for (int i = list_a.Count - list_b.Count; i > 0; i--)
+                    list_b.Add(0);
+            }
+            else if (list_a.Count < list_b.Count)
+            {
+                for (int i = list_b.Count - list_a.Count; i > 0; i--)
+                    list_a.Add(0);
+            }
+            else
+                ;
+
+            if (CompareTo_UnlimitedDataSize_long(list_a, list_b) == 0)
+            {
+                list_result.Add(0);
+            }
+            else if (CompareTo_UnlimitedDataSize_long(list_a, list_b) == 1)
+            {
+                for (int i = 0; i < list_a.Count(); i++)
+                {
+                    if (list_a[i] > list_b[i])
+                    {
+                        list_result.Add(list_a[i] - list_b[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = 0;
+                    }
+                    else if (list_a[i] == list_b[i])
+                    {
+                        list_result.Add(0);
+
+                        if (Result_Carry_Over == -1)
+                        {
+                            list_result[i] = 999999999;
+                            Result_Carry_Over = -1;
+                        }
+                        else
+                            Result_Carry_Over = 0;
+                    }
+                    else
+                    {
+                        list_result.Add(1000000000 + list_a[i] - list_b[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = -1;
+                    }
+                }
+            }
+            else  // if (CompareTo_UnlimitedDataSize_long(list_a, list_b, list_a_Decimal, list_b_Decimal) == -1)
+            {
+                for (int i = 0; i < list_b.Count() - 1; i++)
+                {
+                    if (list_b[i] > list_a[i])
+                    {
+                        list_result.Add(list_b[i] - list_a[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = 0;
+                    }
+                    else if (list_b[i] == list_a[i])
+                    {
+                        list_result.Add(0);
+
+                        if (Result_Carry_Over == -1)
+                        {
+                            list_result[i] = 999999999;
+                            Result_Carry_Over = -1;
+                        }
+                        else
+                            Result_Carry_Over = 0;
+                    }
+                    else
+                    {
+                        list_result.Add(1000000000 + list_b[i] - list_a[i]);
+
+                        if (Result_Carry_Over == -1)
+                            list_result[i]--;
+
+                        Result_Carry_Over = -1;
+                    }
+                }
+
+                // most significant long data
+                list_result.Add(list_a.Last() - list_b.Last());
+                if (Result_Carry_Over == -1)
+                    list_result[list_result.Count - 1]--;
+
+                // remove most significant whole number if they are zero
+                while (list_result.Last() == 0 && list_result.Count() > 1)
+                    list_result.RemoveAt(list_result.Count() - 1);
+            }
+
+            return list_result;
+        }
+
+        private static List<long> Minus_One_UnlimitedDataSize_int(List<long> list_division_multiplication)
+        {
+            int index = 0;
+
+            list_division_multiplication[0]--;
+
+            while (index < list_division_multiplication.Count && list_division_multiplication[index] == -1)
+            {
+                list_division_multiplication[index] = 0;
+                index++;
+
+                list_division_multiplication[index]--;
+            }
+
+            if (list_division_multiplication.Last() == 0)
+                list_division_multiplication.RemoveAt(index);
+
+            return list_division_multiplication;
+        }
+
+        public static string Modular_UnlimitedDataSize_1Digit(string a, string b)         // a%b
+        {
+            List<int> list_a = new List<int>();
+            List<int> list_b = new List<int>();
+            List<int> list_temp_2 = new List<int>();
+            List<int> list_result_division_residue = new List<int>();
+            List<int> list_division_multiplication = new List<int>();
+            Tuple<List<int>, List<int>> tuple_Lists_Result_Residue = new Tuple<List<int>, List<int>>(new List<int>(), new List<int>());
+
+            int count_a_Decimal = 0;
+            int count_b_Decimal = 0;
+            int count_Result_DecimalPosition = 0;
+
+            bool isDecimal = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                int temp_int;
+                isDecimal = false;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(a.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_a_Decimal++;
+
+                        list_a.Insert(0, temp_int);
+                    }
+                }
+
+                while (list_a.Last() == 0)
+                    list_a.RemoveAt(list_a.Count() - 1);
+
+                // remove 0 on right of a_decimal
+                if (isDecimal)
+                {
+                    while (list_a[0] == 0)
+                    {
+                        list_a.RemoveAt(0);
+                        count_a_Decimal--;
+                    }
+                }
+
+                isDecimal = false;
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (b.Substring(i, 1) == ".")
+                        isDecimal = true;
+                    else
+                    {
+                        if (!int.TryParse(b.Substring(i, 1), out temp_int))
+                            throw new FormatException();
+
+                        if (isDecimal)
+                            count_b_Decimal++;
+
+                        list_b.Insert(0, temp_int);
+                    }
+                }
+
+                while (list_b.Last() == 0)
+                    list_b.RemoveAt(list_b.Count() - 1);
+
+                // remove 0 on right of b_decimal
+                if (isDecimal)
+                {
+                    while (list_b[0] == 0)
+                    {
+                        list_b.RemoveAt(0);
+                        count_b_Decimal--;
+                    }
+
+                }
+                count_Result_DecimalPosition = count_b_Decimal;
+
+                // add 0 at the back of a decimal to make count_a_Decimal == count_b_Decimal
+                if (count_a_Decimal < count_b_Decimal)
+                {
+                    for (int i = 0; i < (count_b_Decimal - count_a_Decimal); i++)
+                        list_a.Insert(0, 0);
+
+                    count_Result_DecimalPosition = count_b_Decimal;
+                    count_a_Decimal = 0;
+                    count_b_Decimal = 0;
+                }
+                else if (count_a_Decimal > count_b_Decimal)
+                {
+                    for (int i = 0; i < (count_a_Decimal - count_b_Decimal); i++)
+                        list_b.Insert(0, 0);
+
+                    count_a_Decimal = 0;
+                    count_b_Decimal = 0;
+                }
+                else
+                    ;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("String a or String b are not integer");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Overflow exception");
+            }
+
+            // compute division
+            if (CompareTo_UnlimitedDataSize(list_a, list_b) > 0)
+            {
+                tuple_Lists_Result_Residue = Division_UnlimitedDataSize_1Digit(list_a, list_b);
+
+                if (tuple_Lists_Result_Residue.Item2.Count > 0)
+                    list_result_division_residue = tuple_Lists_Result_Residue.Item2.ToList();
+                else
+                    return "0";
+            }
+            else if (CompareTo_UnlimitedDataSize(list_a, list_b) == 0)
+            {
+                return "0";
+            }
+            else
+                return a;
+
+
+
+            string string_result = "";
+
+            if (list_result_division_residue.Count() > 0)
+            {
+                if (count_Result_DecimalPosition > 0)
+                {
+                    string_result = "0.";
+                    for (int i = 0; i < count_Result_DecimalPosition - 1; i++)
+                        string_result += "0";
+                }
+
+                for (int i = list_result_division_residue.Count() - 1; i >= 0; i--)
+                    string_result = string_result + list_result_division_residue[i].ToString();
+            }
+            else
+            {
+                return "0";
+            }
+
+            return string_result;
+        }
+
+        public static string Modular_UnlimitedDataSize_long(string a, string b)         // a%b
+        {
+            List<long> list_a = new List<long>();
+            int count_a_Decimal = 0;
+            List<long> list_b = new List<long>();
+            int count_b_Decimal = 0;
+            List<long> list_result = new List<long>();
+            List<long> list_result_division_residue = new List<long>();
+            List<long> list_result_division_decimal = new List<long>();
+            Tuple<List<long>, List<long>> tuple_Lists_Result_Residue;
+
+
+            int count_Result_DecimalPosition = 0;
+            bool isDecimal = false;
+
+            bool string_a_firstCharacterNegative = false;
+            bool string_b_firstCharacterNegative = false;
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                long temp_long_1digit;
+                long temp_long = 0;
+                int curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                isDecimal = false;
+
+                // check if string a has any decimal & count of decimal digits
+                count_a_Decimal = a.IndexOf('.');
+                if (count_a_Decimal != -1)
+                    count_a_Decimal = a.Length - 1 - count_a_Decimal;
+                else
+                    count_a_Decimal = 0;
+                // check if string b has any decimal & count of decimal digits
+                count_b_Decimal = b.IndexOf('.');
+                if (count_b_Decimal != -1)
+                    count_b_Decimal = b.Length - 1 - count_b_Decimal;
+                else
+                    count_b_Decimal = 0;
+                count_Result_DecimalPosition = count_b_Decimal;
+
+                // add 0 at the back of a decimal to make count_a_Decimal == count_b_Decimal
+                if (count_a_Decimal > 0 || count_b_Decimal > 0)
+                {
+                    if (count_a_Decimal > count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_a_Decimal - count_b_Decimal; i++)
+                            b += "0";
+
+                        count_b_Decimal = count_a_Decimal;
+                    }
+                    else if (count_a_Decimal < count_b_Decimal)
+                    {
+                        for (int i = 0; i < count_b_Decimal - count_a_Decimal; i++)
+                            a += "0";
+
+                        count_a_Decimal = count_b_Decimal;
+                    }
+                    else
+                        ;
+
+                }
+
+                // convert string a to list_a
+                // check if string a first character is '-'
+                if (a[0] == '-')
+                {
+                    string_a_firstCharacterNegative = true;
+                    a = a.Remove(0, 1);
+                }
+                // Save string a's whole number into list_a
+                for (int i = a.Length - 1; i >= 0; i--)
+                {
+                    if (a.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(a.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 9 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 9));
+
+                        if ((curr_digit + 1) % 9 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_a.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 9 != 0)
+                    list_a.Add(temp_long);     // insert remaining most significant digit temp_int
+
+                // convert string b to list_b
+                temp_long = 0;
+                curr_digit = 0;     // from right to left, from least significant digit to most significant digit
+                                    // check if string a first character is '-'
+                if (b[0] == '-')
+                {
+                    string_b_firstCharacterNegative = true;
+                    b = b.Remove(0, 1);
+                }
+                else
+                    string_b_firstCharacterNegative = false;
+                for (int i = b.Length - 1; i >= 0; i--)
+                {
+                    if (b.Substring(i, 1) != ".")
+                    {
+                        if (!long.TryParse(b.Substring(i, 1), out temp_long_1digit))
+                            throw new FormatException();
+
+                        if ((curr_digit + 1) % 9 == 1)
+                            temp_long = temp_long_1digit;
+                        else
+                            temp_long += temp_long_1digit * (long)(Math.Pow(10, curr_digit % 9));
+
+                        if ((curr_digit + 1) % 9 == 0)
+                        {
+                            if (curr_digit != 0)
+                                list_b.Add(temp_long);
+                        }
+
+                        curr_digit++;
+                    }
+                }
+                if (curr_digit % 9 != 0)
+                    list_b.Add(temp_long);     // insert remaining most significant digit temp_long
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("String a or String b are not integer");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Overflow exception");
+            }
+
+            // compute division
+            if (CompareTo_UnlimitedDataSize_long(list_a, list_b) > 0)
+            {
+                tuple_Lists_Result_Residue = Division_UnlimitedDataSize_long(list_a, list_b);
+                list_result = tuple_Lists_Result_Residue.Item1.ToList();
+                while (list_result.Last() == 0)
+                    list_result.RemoveAt(list_result.Count() - 1);
+
+                if (tuple_Lists_Result_Residue.Item2.Count > 0)
+                    list_result_division_residue = tuple_Lists_Result_Residue.Item2.ToList();
+
+            }
+            else if (CompareTo_UnlimitedDataSize_long(list_a, list_b) == 0)
+            {
+                // a % b = 0 when a == b
+                return "0";
+            }
+            else
+            {
+                // a % b = a when a < b
+                return a;
+            }
+
+            // print list_result_division_residue
+            string string_result = "";
+
+            if (list_result_division_residue.Count() > 0)
+            {
+                if (count_Result_DecimalPosition > 0)
+                {
+                    string_result = "0.";
+                    for (int i = 0; i < count_Result_DecimalPosition - 1; i++)
+                        string_result += "0";
+
+                }
+                string_result += list_result_division_residue.Last().ToString();
+
+                if (list_result_division_residue.Count() > 1)
+                {
+                    for (int i = list_result_division_residue.Count() - 2; i >= 0; i--)
+                    {
+                        int temp_most_significant_digit_position = 100000000;
+                        while (list_result_division_residue[i] < temp_most_significant_digit_position)
+                        {
+                            string_result += "0";
+                            temp_most_significant_digit_position /= 10;
+                        }
+
+                        if (list_result_division_residue[i] != 0)
+                            string_result += list_result_division_residue[i].ToString();
+                    }
+                }
+            }
+            else
+                return "0";
+
+            return string_result;
+        }
+
+        public static string Exponent_UnlimitedDataSize_1Digit(string a, string b)         // a^b
+        {
+            // a and b only integer allowed
+            // work when b not too big from 1073741824
+            List<int> list_a = new List<int>();
+            List<int> list_b = new List<int>();
+            List<int> list_result = new List<int>() { 1 };
+            int _2ToPowerOf = 1073741824;
+            List<int> list_2ToPowerOf = new List<int> { 4, 2, 8, 1, 4, 7, 3, 7, 0, 1 };
+            List<int> list_Exponent_PowerOf2 = new List<int>();
+
+            List<int> list_count_1073741824 = new List<int>() { 0 };
+
+            if (a == "0")
+                return "0";
+            if (a == "1")
+                return "1";
+            if (b == "0")
+                return "1";
+            if (b == "1")
+                return a;
+
+            for (int i = 0; i < a.Length; i++)
+                list_a.Insert(0, Int32.Parse(a.Substring(i, 1)));
+
+            for (int i = 0; i < b.Length; i++)
+                list_b.Insert(0, Int32.Parse(b.Substring(i, 1)));
+
+            List<int> list_intermittent_result_multiplication = list_a.ToList();
+
+            List<int> list_duplicate_b = list_b.ToList();
+
+            // when b >= 1073741824
+            if(CompareTo_UnlimitedDataSize(list_duplicate_b, list_2ToPowerOf) >= 0)
+            {
+                while (CompareTo_UnlimitedDataSize(list_duplicate_b, list_2ToPowerOf) >= 0)
+                {
+                    list_duplicate_b = Minus_UnlimitedDataSize_1Digit(list_duplicate_b, list_2ToPowerOf).ToList();
+                    list_count_1073741824 = Addition_UnlimitedDataSize_1Digit(list_count_1073741824, new List<int>() { 1 }).ToList();
+                }
+
+                // Compute and save to list_result
+                _2ToPowerOf = 2;
+                while (_2ToPowerOf < 1073741824)
+                {
+                    list_intermittent_result_multiplication = Multiplication_UnlimitedDataSize_1Digit(list_intermittent_result_multiplication, list_intermittent_result_multiplication).ToList();
+                    _2ToPowerOf *= 2;
+                }
+
+                do
+                {
+                    list_result = Multiplication_UnlimitedDataSize_1Digit(list_result, list_intermittent_result_multiplication).ToList();
+                    list_count_1073741824 = Minus_UnlimitedDataSize_1Digit(list_count_1073741824, new List<int>() { 1 }).ToList();
+                } while (list_count_1073741824.Count() > 0 && list_count_1073741824.Last() != 0);
+            }
+
+            // compute the remaining of list_duplicate_b
+            // all list_Exponent_PowerOf2 are smaller than 1073741824
+            _2ToPowerOf = 1073741824;
+            while (list_duplicate_b.Count() > 0 && list_duplicate_b.Last() != 0)
+            {
+                while (CompareTo_UnlimitedDataSize(list_duplicate_b, list_2ToPowerOf) == -1 && _2ToPowerOf >= 0)
+                {
+                    _2ToPowerOf /= 2;
+                    string str_2ToPowerOf = _2ToPowerOf.ToString();
+                    list_2ToPowerOf.Clear();
+                    foreach (char char_2ToPowerOf in str_2ToPowerOf)
+                        list_2ToPowerOf.Insert(0, Int32.Parse(char_2ToPowerOf.ToString()));
+                }
+                list_Exponent_PowerOf2.Insert(0, _2ToPowerOf);
+                list_duplicate_b = Minus_UnlimitedDataSize_1Digit(list_duplicate_b, list_2ToPowerOf);
+            }
+
+            if (list_Exponent_PowerOf2.Count > 0 && list_Exponent_PowerOf2.FirstOrDefault() == 1)
+            {
+                list_Exponent_PowerOf2.RemoveAt(0);
+                list_result = Multiplication_UnlimitedDataSize_1Digit(list_result, list_a).ToList();
+            }
+
+            _2ToPowerOf = 1;
+            list_intermittent_result_multiplication = list_a.ToList();
+            while (list_Exponent_PowerOf2.Count > 0)
+            {
+                List<int> list_temp1 = new List<int>();
+                while (list_Exponent_PowerOf2.FirstOrDefault() > _2ToPowerOf)
+                {
+                    list_temp1.Clear();
+                    list_temp1 = new List<int>(list_intermittent_result_multiplication);
+                    list_intermittent_result_multiplication.Clear();
+                    list_intermittent_result_multiplication = new List<int>(Multiplication_UnlimitedDataSize_1Digit(list_temp1, list_temp1));
+                    _2ToPowerOf *= 2;
+                }
+                list_Exponent_PowerOf2.RemoveAt(0);
+
+                list_result = new List<int>(Multiplication_UnlimitedDataSize_1Digit(list_result, list_intermittent_result_multiplication));
+            }
+
+            string string_result = "";
+
+            for (int i = list_result.Count() - 1; i >= 0; i--)
+                string_result += list_result[i].ToString();
+
+            return string_result;
+        }
+
+        public static string Exponent_UnlimitedDataSize2_1Digit(string a, string b)         // a^b
+        {
+            // in progress programming, not ready
+            // a and b only integer allowed
+            List<int> list_a = new List<int>();
+            List<int> list_b = new List<int>();
+            List<int> list_result = new List<int>() { 1 };
+
+            bool string_a_firstCharacterNegative = false;
+            bool string_b_firstCharacterNegative = false;
+
+            for (int i = 0; i < a.Length; i++)
+                list_a.Insert(0, Int32.Parse(a.Substring(i, 1)));
+
+            for (int i = 0; i < b.Length; i++)
+                list_b.Insert(0, Int32.Parse(b.Substring(i, 1)));
+
+            try
+            {
+                a = a.Trim();
+                b = b.Trim();
+
+                int temp_int;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (!int.TryParse(a.Substring(i, 1), out temp_int))
+                        throw new FormatException();
+
+                    list_a.Insert(0, temp_int);
+                }
+
+                while (list_a.Last() == 0)
+                    list_a.RemoveAt(list_a.Count() - 1);
+
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (!int.TryParse(b.Substring(i, 1), out temp_int))
+                        throw new FormatException();
+
+                    list_b.Insert(0, temp_int);
+                }
+
+                while (list_b.Last() == 0)
+                    list_b.RemoveAt(list_b.Count() - 1);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("String a or String b are not integer");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Overflow exception");
+            }
+
+            List<List<int>> list_toCompute_list_2ToPowerOf = new List<List<int>>();
+            List<int> list_2ToPowerOf = new List<int>() { 1 };
+            List<int> list_Output_2toPowerOf = new List<int>() { 2 };
+            List<int> list_Remainder_b_Minus_Output2toPowerOf = list_b.ToList();
+
+            if (list_b.Count() == 1 && list_b.Last() != 0)
+                return "1";
+            else if (list_b.Count() == 1 && list_b.Last() != 1)
+                return a;
+            else
+            {
+                while (list_Remainder_b_Minus_Output2toPowerOf.Last() != 0)
+                {
+                    list_2ToPowerOf = new List<int>() { 1 };
+                    list_Output_2toPowerOf = new List<int>() { 2 };
+
+                    while (CompareTo_UnlimitedDataSize(list_Remainder_b_Minus_Output2toPowerOf, list_Output_2toPowerOf) > 0)
+                    {
+                        list_2ToPowerOf = Addition_UnlimitedDataSize_1Digit(list_2ToPowerOf, new List<int>() { 1 }).ToList();
+                        list_Output_2toPowerOf = Multiplication_UnlimitedDataSize_1Digit(list_Output_2toPowerOf, new List<int>() { 2 }).ToList();
+                    }
+
+                    if (CompareTo_UnlimitedDataSize(list_Remainder_b_Minus_Output2toPowerOf, list_Output_2toPowerOf) == 0)
+                    {
+                        list_toCompute_list_2ToPowerOf.Add(list_2ToPowerOf);
+                        list_Remainder_b_Minus_Output2toPowerOf.Clear();
+                        list_Remainder_b_Minus_Output2toPowerOf.Add(0);
+                    }
+                    else
+                    {
+                        list_Remainder_b_Minus_Output2toPowerOf = Minus_UnlimitedDataSize_1Digit(list_Remainder_b_Minus_Output2toPowerOf, Division_UnlimitedDataSize_1Digit(list_Output_2toPowerOf, new List<int>() { 2 }).Item1).ToList();
+                        list_2ToPowerOf = Minus_UnlimitedDataSize_1Digit(list_2ToPowerOf, new List<int>() { 1 }).ToList();
+                        list_toCompute_list_2ToPowerOf.Add(list_2ToPowerOf);
+                    }
+                        
+                }
+            }
+
+            string string_result = "";
+
+            for (int i = list_result.Count() - 1; i >= 0; i--)
+                string_result += list_result[i].ToString();
+
+            return string_result;
+        }
+
+    }
+}
