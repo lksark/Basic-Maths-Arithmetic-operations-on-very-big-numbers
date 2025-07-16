@@ -35,7 +35,7 @@ Static class ‘MathArithmetic’ operators’ Addition, Subtraction, Multiplica
 
 <ins>Version 0:</ins>
 Version ‘0’ compute arithmetic operator single digit by single digit. Each digit of the input numbers are stored as a node inside the linked-lists.
-[main.cs](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/main.cs)   [MathArithmetic.cs](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/MathArithmetic.cs)
+[main_v0.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/main_v0.cs.txt)   [MathArithmetic_v0.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/MathArithmetic_v0.cs.txt)
 
 
 <ins>Version 1</ins>
@@ -52,7 +52,7 @@ Division and Modular operators both using brute force method to derive the resul
 
 We can choose to use either version ‘0’ or version ‘1’ as both of them accept input number in string format and produce result in string format.
 
-  main_v1.cs.txt   MathArithmetic_v1.cs.txt
+  [main_v1.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/main_v1.cs.txt)    [MathArithmetic_v1.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/MathArithmetic_v1.cs.txt)
 
  
 
@@ -62,7 +62,7 @@ In version 1 Division (‘MathArithmetic.Division_UnlimitedDataSize_long’) and
 
 Version 2 Division operator (‘MathArithmetic.Division_UnlimitedDataSize_long’), get an approximate outcome at most significant ‘long’ node, then in each iteration deduct 1 from the following most significant digits, then to the next digits to get to the closest number. Therefore version 2 Division operator (‘MathArithmetic.Division_UnlimitedDataSize_long’) will be faster than version 1 division operator. However, it is still slower than version 0 Division operator (‘MathArithmetic.Division_UnlimitedDataSize_1Digit’).
 
-main_v2.cs.txt   MathArithmetic_v2.cs.txt
+[main_v2.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/main_v2.cs.txt)   [MathArithmetic_v2.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/MathArithmetic_v2.cs.txt)
 
  
 
@@ -80,7 +80,7 @@ When computing exponent power with integer only, the program uses multiplication
 
 When Exponent arithmetic’s exponent power has decimal points (example 5^1.5), decimals part computation will be using Exponential Root arithmetic. Therefore, take very long times and memory to compute. As we all know, exponential increment is very rapid. Hence is a bad idea to compute Exponential Root arithmetic using brute force method. May consider using logarithm to compute Exponent Root arithmetic in future.
 
-main_v3.cs.txt   MathArithmetic_v3.cs.txt
+[main_v3.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/main_v3.cs.txt)   [MathArithmetic_v3.cs.txt](https://github.com/lksark/Basic-Maths-Arithmetic-operations-on-very-big-numbers/blob/main/MathArithmetic_v3.cs.txt)
  
 
  
